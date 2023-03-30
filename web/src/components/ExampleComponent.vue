@@ -4,7 +4,7 @@
     ul
       li(v-for='todo in todos' :key='todo.id' @click='increment')
         | {{ todo.id }} - {{ todo.content }}
-    p Count: {{ todoCount }} / {{ meta.totalCount }}
+    p Count: {{ todoCount }} / {{ props.meta.totalCount }}
     p Active: {{ active ? 'yes' : 'no' }}
     p Clicks on todos: {{ clickCount }}
 </template>
@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const clickCount = ref(0)
-function increment () {
+const increment = () => {
   clickCount.value += 1
   return clickCount.value
 }

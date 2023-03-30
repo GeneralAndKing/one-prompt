@@ -33,18 +33,26 @@ extra["testcontainersVersion"] = "1.17.6"
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-actuator")
-//	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 //	implementation("org.springframework.boot:spring-boot-starter-data-redis")
 //	implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
 //	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("jakarta.validation:jakarta.validation-api")
+	implementation("org.apache.commons:commons-lang3")
+	implementation("org.apache.commons:commons-collections4:4.4")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+	implementation(group = "com.querydsl", name = "querydsl-jpa", classifier = "jakarta")
 	compileOnly("org.projectlombok:lombok")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("org.postgresql:postgresql")
+	annotationProcessor(
+		group = "com.querydsl", name = "querydsl-apt", classifier = "jakarta"
+	)
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+	annotationProcessor("jakarta.persistence:jakarta.persistence-api")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
