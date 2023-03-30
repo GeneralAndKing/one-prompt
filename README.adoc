@@ -1,0 +1,16 @@
+= OnePrompt
+
+Get your idea from one prompt.
+
+== Structure
+
+The project should have many modules.
+
+- `admin`: Admin web ui.
+- `mini`: User wechat mini program.
+- `service`: Main service.
+- `web`: User main web ui.
+
+== Milestone
+
+(TODO)
