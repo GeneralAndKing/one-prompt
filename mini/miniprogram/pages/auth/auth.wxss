@@ -1,0 +1,16 @@
+.auth-title {
+  margin-top: 50rpx;
+}
+
+.auth-description {
+  margin-top: 20rpx;
+  font-size: 24rpx;
+  color: #b9b5b5;
+}
+
+.auth-action {
+  display: flex;
+  justify-content: center;
+  margin: 150rpx 45rpx;
+  width: 100%;
+}

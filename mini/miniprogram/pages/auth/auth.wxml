@@ -1,0 +1,10 @@
+<view class="container auth">
+  <t-icon color="#4475ff" name="time" size="120rpx" data-name="time" />
+  <view class="auth-title">授权登录 One Prompt</view>
+  <view class="auth-description">
+    授权后，将在电脑登录 One Prompt
+  </view>
+  <view class="auth-action">
+    <t-button theme="primary" size="large" open-type="getPhoneNumber" bindgetphonenumber="getUserInfo">确认登录</t-button>
+  </view>
+</view>

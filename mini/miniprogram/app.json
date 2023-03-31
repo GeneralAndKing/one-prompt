@@ -2,7 +2,8 @@
   "$schema": "https://newfuture.github.io/miniprogram-json-schema/app.json",
   "pages": [
     "pages/index/index",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/auth/auth"
   ],
   "window": {
     "backgroundTextStyle": "light",
