@@ -2,4 +2,5 @@
 
 - `common`: Common code.
 - `official`: Wechat official account.
+- `mini`: Wechat mini program.
 - `prompt`: Web prompt backend.
