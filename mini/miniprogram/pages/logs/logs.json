@@ -1,0 +1,5 @@
+{
+  "$schema": "https://newfuture.github.io/miniprogram-json-schema/component.json",
+  "navigationBarTitleText": "查看启动日志",
+  "usingComponents": {}
+}

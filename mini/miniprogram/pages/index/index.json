@@ -1,0 +1,6 @@
+{
+  "$schema": "https://newfuture.github.io/miniprogram-json-schema/component.json",
+  "usingComponents": {
+    "t-button": "tdesign-miniprogram/button/button"
+  }
+}
