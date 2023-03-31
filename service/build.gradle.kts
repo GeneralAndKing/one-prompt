@@ -1,19 +1,11 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
+  java
   id("org.springframework.boot")
   id("io.spring.dependency-management")
   id("org.graalvm.buildtools.native")
-  id("org.asciidoctor.jvm.convert")
-  kotlin("jvm")
-  kotlin("plugin.spring")
-  kotlin("plugin.jpa")
 }
 
 
-val asciidoctorExtensions: Configuration by configurations.creating
-val snippetsDir by extra { file("build/generated-snippets") }
-extra["snippetsDir"] = file("build/generated-snippets")
 extra["testcontainersVersion"] = "1.17.6"
 
 allprojects {
@@ -22,16 +14,14 @@ allprojects {
     maven { url = uri("https://repo.spring.io/milestone") }
     mavenCentral()
   }
+
 }
 
 subprojects {
   apply(plugin = "org.springframework.boot")
   apply(plugin = "io.spring.dependency-management")
   apply(plugin = "org.graalvm.buildtools.native")
-  apply(plugin = "org.asciidoctor.jvm.convert")
-  apply(plugin = "org.jetbrains.kotlin.jvm")
-  apply(plugin = "org.jetbrains.kotlin.plugin.spring")
-  apply(plugin = "org.jetbrains.kotlin.plugin.jpa")
+  apply(plugin = "java")
 
   java.sourceCompatibility = JavaVersion.VERSION_17
   java.targetCompatibility = JavaVersion.VERSION_17
@@ -81,41 +71,8 @@ subprojects {
     }
   }
 
-  tasks.withType<KotlinCompile> {
-    kotlinOptions {
-      freeCompilerArgs = listOf("-Xjsr305=strict")
-      jvmTarget = "17"
-    }
-  }
-
   tasks.test {
-    doFirst { delete(snippetsDir) }
-    outputs.dir(snippetsDir)
     useJUnitPlatform()
   }
 
-// https://github.com/spring-io/start.spring.io/issues/676#issuecomment-859641317
-  tasks.asciidoctor {
-    doFirst {
-      delete(outputDir)
-      copy {
-        from(snippetsDir)
-        into(sourceDir)
-      }
-    }
-    dependsOn(tasks.test)
-    configurations(asciidoctorExtensions.name)
-    setOutputDir(file("src/main/resources/static/docs"))
-    attributes(
-      mapOf(
-        "snippets" to snippetsDir,
-        "source-highlighter" to "highlight.js"
-      )
-    )
-  }
-
-  tasks.bootJar {
-    dependsOn(tasks.asciidoctor)
-    dependsOn(tasks.withType<Copy>())
-  }
 }
