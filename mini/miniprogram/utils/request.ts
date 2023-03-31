@@ -1,5 +1,4 @@
-import RequestOption = WechatMiniprogram.RequestOption
-export interface RequestOptions extends RequestOption {
+export interface RequestOptions extends WechatMiniprogram.RequestOption {
   loading?: boolean
 }
 export enum HttpMethod {
@@ -22,6 +21,7 @@ const http = <T>(url: string, data?: any, method: HttpMethod = HttpMethod.GET, o
     // @ts-ignore
     ...restOptions.headers
   }
+  console.log(url)
 
   return new Promise<T>((resolve, reject) => {
     wx.request({

@@ -1,7 +1,7 @@
 package one.prompt.controller;
 
 import lombok.RequiredArgsConstructor;
-import one.prompt.modal.WechatConfig;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin
 public class HelloController {
 
-  private final WechatConfig wechatConfig;
-
   @GetMapping("/hello")
-  public String hello() {
-    return wechatConfig.url().getBase();
+  public String hello(String code) {
+    return "";
   }
 
 }
