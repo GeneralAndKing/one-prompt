@@ -7,4 +7,5 @@
   <view class="auth-action">
     <t-button theme="primary" size="large" open-type="getPhoneNumber" bindgetphonenumber="getUserInfo">确认登录</t-button>
   </view>
+  <t-toast id="t-toast" />
 </view>

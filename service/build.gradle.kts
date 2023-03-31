@@ -52,6 +52,7 @@ subprojects {
 //	implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("jakarta.validation:jakarta.validation-api")
     implementation("org.apache.commons:commons-lang3")
     implementation("org.apache.commons:commons-collections4:4.4")

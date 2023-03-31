@@ -1,2 +1,8 @@
 server:
   port: 9002
+wechat:
+  app-id: wx0286ac4d19920db2
+  app-secret:
+  url:
+    base: https://api.weixin.qq.com
+    phone-number: /wxa/business/getuserphonenumber
