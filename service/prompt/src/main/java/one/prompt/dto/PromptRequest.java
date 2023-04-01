@@ -1,7 +1,6 @@
 package one.prompt.dto;
 
 import lombok.Data;
-import one.prompt.enums.Model;
 
 import java.util.List;
 
@@ -15,6 +14,8 @@ public class PromptRequest {
 
     List<Long> tagIds;
 
+    Long modelId;
+
     String name;
 
     String description;
@@ -27,5 +28,5 @@ public class PromptRequest {
 
     String instructions;
 
-    Model model;
+
 }

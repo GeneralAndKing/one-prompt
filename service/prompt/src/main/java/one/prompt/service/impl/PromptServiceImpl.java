@@ -35,6 +35,9 @@ public class PromptServiceImpl implements PromptService {
     @Override
     public Prompt add(PromptRequest request) {
         Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, String.format("Can't found category id : %d", request.getCategoryId())));
+        if (!category.getModel().getId().equals(request.getModelId())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Model and category do not match.");
+        }
         List<Tag> tags = tagRepository.findAllById(request.getTagIds());
         if (tags.size() != request.getTagIds().size()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The tag list does not match expectations.");
@@ -43,7 +46,7 @@ public class PromptServiceImpl implements PromptService {
                 .name(request.getName())
                 .description(request.getDescription())
                 .logo(request.getLogo())
-                .model(request.getModel())
+                .model(category.getModel())
                 .images(request.getImages())
                 .category(category)
                 .content(request.getContent())

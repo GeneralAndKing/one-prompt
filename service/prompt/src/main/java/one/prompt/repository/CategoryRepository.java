@@ -4,6 +4,7 @@ import one.prompt.common.base.BaseRepository;
 import one.prompt.entity.Category;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -13,4 +14,6 @@ import java.util.Optional;
 public interface CategoryRepository extends BaseRepository<Category> {
 
     Optional<Category> findByName(String name);
+
+    List<Category> findAllByModelId(Long modelId);
 }

@@ -8,7 +8,6 @@ import lombok.*;
 import lombok.experimental.Accessors;
 import one.prompt.common.base.BaseEntity;
 import one.prompt.dto.PublicPrompt;
-import one.prompt.enums.Model;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.Where;
@@ -48,8 +47,9 @@ public class Prompt extends BaseEntity<Prompt> {
     @OneToOne(mappedBy = "prompt", cascade = CascadeType.ALL)
     Statistics statistics;
 
-    @Column(name = "model")
-    @Enumerated(EnumType.STRING)
+    @ManyToOne()
+    @JsonManagedReference
+    @JoinColumn(name = "model_id")
     Model model;
 
     @ToString.Exclude
@@ -83,7 +83,6 @@ public class Prompt extends BaseEntity<Prompt> {
     public PublicPrompt toPublicPrompt() {
         return PublicPrompt.builder()
                 .id(this.getId())
-                .model(this.getModel())
                 .name(this.getName())
                 .logo(this.getLogo())
                 .watch(this.getStatistics().getWatch())
