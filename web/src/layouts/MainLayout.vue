@@ -1,42 +1,85 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+  <q-layout class="container" view="lHh lpR fFf">
 
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
-
-        <div>Quasar v{{ $q.version }}</div>
+    <q-header bordered class="bg-black text-white">
+      <q-toolbar class="row justify-between">
+        <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+        <q-input filled style="width: 500px" bg-color="bg-gray-800" standout=" text-white" color="bg-gray-800"  placeholder="Search">
+          <template v-slot:prepend>
+            <q-icon name="search" />
+          </template>
+        </q-input>
+        <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
+    <q-drawer width="210" class="bg-black" show-if-above v-model="leftDrawerOpen" side="left">
+      <q-img class="q-mx-auto flex q-mt-lg" width="125px" src="https://resources.echocow.cn/prompt/logo-line.png"/>
+      <q-list style="margin-top: 20px" dense dark>
+        <q-expansion-item
+          icon="mail"
+          expand-icon-class="menu-icon"
+          label="Inbox">
+          <div style="margin-left: 40px; border-left: 1px solid #999999">
+            <q-item style="height: 20px" dense clickable v-ripple>
+              <q-item-section>全部</q-item-section>
+              <q-checkbox size="sm" :model-value="false" />
+            </q-item>
+            <q-item style="height: 20px" dense clickable v-ripple>
+              <q-item-section>动物</q-item-section>
+              <q-checkbox size="sm" :model-value="true" />
+            </q-item>
+            <q-item style="height: 20px" dense clickable v-ripple>
+              <q-item-section>哈哈哈</q-item-section>
+              <q-checkbox size="sm" :model-value="true" />
+            </q-item>
+            <q-item style="height: 20px" dense clickable v-ripple>
+              <q-item-section>啊啥啥啥</q-item-section>
+              <q-checkbox size="sm" :model-value="false" />
+            </q-item>
+          </div>
+        </q-expansion-item>
+        <q-expansion-item
+          icon="mail"
+          label="Inbox">
+          <div style="margin-left: 40px; border-left: 1px solid #999999">
+            <q-item style="height: 20px" dense clickable v-ripple>
+              <q-item-section>Icon as avatar</q-item-section>
+              <q-checkbox  />
+            </q-item>
+          </div>
+        </q-expansion-item>
+        <q-expansion-item
+          icon="mail"
+          label="Inbox">
+          <div style="margin-left: 40px; border-left: 1px solid #999999">
+            <q-item style="height: 20px" dense clickable v-ripple>
+              <q-item-section>Icon as avatar</q-item-section>
+              <q-checkbox  />
+            </q-item>
+          </div>
+        </q-expansion-item>
+        <q-expansion-item
+          icon="mail"
+          label="Inbox">
+          <div style="margin-left: 40px; border-left: 1px solid #999999">
+            <q-item style="height: 20px" dense clickable v-ripple>
+              <q-item-section>Icon as avatar</q-item-section>
+              <q-checkbox  />
+            </q-item>
+          </div>
+        </q-expansion-item>
       </q-list>
     </q-drawer>
 
+    <q-drawer show-if-above v-model="rightDrawerOpen" side="right" bordered>
+      <!-- drawer content -->
+    </q-drawer>
+
     <q-page-container>
-      <router-view />
+      <router-view/>
     </q-page-container>
+
   </q-layout>
 </template>
 
@@ -44,8 +87,24 @@
 import { ref } from 'vue'
 
 const leftDrawerOpen = ref(false)
+const rightDrawerOpen = ref(false)
 
-function toggleLeftDrawer () {
+const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
+
+const toggleRightDrawer = () => {
+  rightDrawerOpen.value = !rightDrawerOpen.value
+}
+
 </script>
+
+<style  lang="scss">
+.container {
+  .header {
+    height: 66px;
+  }
+  .q-item__section--side {
+  }
+}
+</style>

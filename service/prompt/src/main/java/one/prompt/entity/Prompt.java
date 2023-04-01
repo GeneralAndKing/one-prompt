@@ -68,6 +68,7 @@ public class Prompt extends BaseEntity<Prompt> {
     @JoinTable(name = "prompt_tag_relation",
             joinColumns = @JoinColumn(name = "prompt_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    @ToString.Exclude
     List<Tag> tags;
 
     @Column(name = "content", columnDefinition = "text")
