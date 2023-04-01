@@ -1,6 +1,7 @@
 export interface RequestOptions extends WechatMiniprogram.RequestOption {
   loading?: boolean
 }
+
 export enum HttpMethod {
   GET = 'GET',
   POST = 'POST',
@@ -9,10 +10,10 @@ export enum HttpMethod {
 }
 
 const http = <T>(url: string, data?: any, method: HttpMethod = HttpMethod.GET, options?: RequestOptions): Promise<T> => {
-  const { loading, ...restOptions } = options || {}
+  const {loading, ...restOptions} = options || {}
 
   if (loading) {
-    wx.showLoading({ title: '加载中' })
+    wx.showLoading({title: '加载中'})
   }
 
   const token = wx.getStorageSync('token')
@@ -21,11 +22,10 @@ const http = <T>(url: string, data?: any, method: HttpMethod = HttpMethod.GET, o
     // @ts-ignore
     ...restOptions.headers
   }
-  console.log(url)
-
+  const baseUrl = wx.getStorageSync('baseUrl') || 'http://dev.zyue.wiki:9002'
   return new Promise<T>((resolve, reject) => {
     wx.request({
-      url,
+      url: baseUrl + url,
       data,
       method,
       header: headers,
@@ -34,9 +34,15 @@ const http = <T>(url: string, data?: any, method: HttpMethod = HttpMethod.GET, o
         resolve(res.data as T)
       },
       fail: (err) => {
+        console.error(err)
+        wx.showToast({
+          title: '啊哦，请求数据失败',
+          icon: 'error',
+          mask: false
+        })
         reject(err)
       },
-      complete : () => {
+      complete: () => {
         if (loading) {
           wx.hideLoading()
         }

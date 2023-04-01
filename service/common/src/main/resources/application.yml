@@ -10,3 +10,7 @@ spring:
       ddl-auto: update
   profiles:
     active: dev
+  data:
+    redis:
+      host: 1.14.68.40
+      database: 1

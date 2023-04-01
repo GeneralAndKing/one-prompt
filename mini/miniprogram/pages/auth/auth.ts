@@ -1,10 +1,13 @@
 import Toast from 'tdesign-miniprogram/toast'
-import {get} from '../../utils/request'
+import {auth, getPhoneNumber} from '../../api/auth'
 
 Page({
   data: {},
   onLoad() {
-
+    const openId = wx.getStorageSync("openId")
+    if (!openId) {
+      auth().catch(() => console.error('登陆失败'))
+    }
   },
   getUserInfo(e: WechatMiniprogram.ButtonGetPhoneNumber) {
     if (!e.detail.code) {
@@ -16,12 +19,9 @@ Page({
       return
     }
     const code = e.detail.code
-    console.log(code)
-    get('http://dev.zyue.wiki:9002/hello')
-      .then(res => {
+    getPhoneNumber(code)
+      .then((res: PhoneResponse) => {
         console.log(res)
-      }).catch(err => {
-      console.error(err)
-    })
+      })
   }
 })
