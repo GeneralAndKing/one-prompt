@@ -1,4 +1,4 @@
-package one.prompt.entity;
+package one.prompt.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -6,8 +6,11 @@ import io.hypersistence.utils.hibernate.type.json.JsonType;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 import one.prompt.common.base.BaseEntity;
-import one.prompt.dto.PublicPrompt;
+import one.prompt.common.dto.LikedPrompt;
+import one.prompt.common.dto.PublicPrompt;
+import one.prompt.common.dto.UnlikedPrompt;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.Where;
@@ -20,7 +23,7 @@ import java.util.List;
  */
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -85,6 +88,32 @@ public class Prompt extends BaseEntity<Prompt> {
                 .id(this.getId())
                 .name(this.getName())
                 .logo(this.getLogo())
+                .watch(this.getStatistics().getWatch())
+                .star(this.getStatistics().getStar())
+                .liked(this.getStatistics().getLiked())
+                .build();
+    }
+
+    public UnlikedPrompt toUnlikedPrompt() {
+        return UnlikedPrompt.builder()
+                .id(this.getId())
+                .name(this.getName())
+                .logo(this.getLogo())
+                .tags(this.getTags())
+                .images(this.getImages())
+                .watch(this.getStatistics().getWatch())
+                .star(this.getStatistics().getStar())
+                .liked(this.getStatistics().getLiked())
+                .build();
+    }
+
+    public LikedPrompt toLikedPrompt() {
+        return LikedPrompt.builder()
+                .id(this.getId())
+                .name(this.getName())
+                .logo(this.getLogo())
+                .tags(this.getTags())
+                .images(this.getImages())
                 .watch(this.getStatistics().getWatch())
                 .star(this.getStatistics().getStar())
                 .liked(this.getStatistics().getLiked())

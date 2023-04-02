@@ -1,4 +1,4 @@
-package one.prompt.entity;
+package one.prompt.common.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -9,8 +9,6 @@ import one.prompt.common.base.BaseEntity;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.util.List;
 
 /**
  * @author klein

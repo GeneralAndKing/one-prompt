@@ -10,7 +10,11 @@ import jakarta.persistence.TemporalType;
 
 import java.time.LocalDateTime;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
 import org.springframework.data.annotation.CreatedBy;
@@ -25,6 +29,9 @@ import org.springframework.data.annotation.LastModifiedDate;
  */
 @Getter
 @MappedSuperclass
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @SuppressWarnings({"unused", "unchecked"})
 public class BaseEntity<E extends BaseEntity<E>> {
 
@@ -43,6 +50,7 @@ public class BaseEntity<E extends BaseEntity<E>> {
     @Column(nullable = false)
     @Comment("Data deleted. 1 deleted, 0 exist")
     @ColumnDefault("false")
+    @Builder.Default
     private Boolean deleted = Boolean.FALSE;
 
 
@@ -85,6 +93,7 @@ public class BaseEntity<E extends BaseEntity<E>> {
      * Sort data.
      */
     @ColumnDefault("0")
+    @Builder.Default
     private Integer sort = 0;
 
     public E setId(Long id) {

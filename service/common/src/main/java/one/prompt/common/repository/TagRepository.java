@@ -1,7 +1,7 @@
-package one.prompt.repository;
+package one.prompt.common.repository;
 
 import one.prompt.common.base.BaseRepository;
-import one.prompt.entity.Tag;
+import one.prompt.common.entity.Tag;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;

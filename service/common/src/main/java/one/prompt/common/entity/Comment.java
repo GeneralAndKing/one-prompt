@@ -1,10 +1,10 @@
-package one.prompt.entity;
+package one.prompt.common.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 import one.prompt.common.base.BaseEntity;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -15,7 +15,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
  */
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @Entity
 @ToString(callSuper = true)
 @Accessors(chain = true)

@@ -1,11 +1,11 @@
 package one.prompt.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import one.prompt.dto.PublicPrompt;
-import one.prompt.entity.Prompt;
-import one.prompt.entity.Tag;
-import one.prompt.repository.PromptRepository;
-import one.prompt.repository.TagRepository;
+import one.prompt.common.dto.PublicPrompt;
+import one.prompt.common.entity.Prompt;
+import one.prompt.common.entity.Tag;
+import one.prompt.common.repository.PromptRepository;
+import one.prompt.common.repository.TagRepository;
 import one.prompt.service.CategoryService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

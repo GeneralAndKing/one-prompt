@@ -1,10 +1,10 @@
 package one.prompt.controller;
 
 import lombok.RequiredArgsConstructor;
-import one.prompt.entity.Category;
-import one.prompt.entity.Model;
-import one.prompt.repository.CategoryRepository;
-import one.prompt.repository.ModelRepository;
+import one.prompt.common.entity.Category;
+import one.prompt.common.entity.Model;
+import one.prompt.common.repository.CategoryRepository;
+import one.prompt.common.repository.ModelRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +22,7 @@ import java.util.List;
 public class ModelController {
 
     private final ModelRepository modelRepository;
+
     private final CategoryRepository categoryRepository;
 
     @GetMapping()

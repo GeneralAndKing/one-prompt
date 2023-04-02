@@ -1,6 +1,7 @@
 package one.prompt.service;
 
-import one.prompt.dto.PublicPrompt;
+import one.prompt.common.dto.PublicPrompt;
+import one.prompt.common.entity.Prompt;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

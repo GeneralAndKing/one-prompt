@@ -1,8 +1,8 @@
-package one.prompt.dto;
+package one.prompt.common.dto;
 
 import lombok.Builder;
 import lombok.Getter;
-import one.prompt.entity.Model;
+
 
 /**
  * @author klein

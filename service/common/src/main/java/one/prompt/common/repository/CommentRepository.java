@@ -1,7 +1,7 @@
-package one.prompt.repository;
+package one.prompt.common.repository;
 
 import one.prompt.common.base.BaseRepository;
-import one.prompt.entity.Comment;
+import one.prompt.common.entity.Comment;
 import org.springframework.stereotype.Repository;
 
 /**

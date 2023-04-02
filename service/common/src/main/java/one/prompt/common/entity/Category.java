@@ -1,4 +1,4 @@
-package one.prompt.entity;
+package one.prompt.common.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -28,6 +28,11 @@ import java.util.List;
 @SQLDelete(sql = "UPDATE category SET deleted=true WHERE id=?")
 public class Category extends BaseEntity<Category> {
 
+    public record HomeRecord(
+            String name
+    ) {
+    }
+
     @ManyToOne()
     @JsonManagedReference
     @JoinColumn(name = "model_id")
@@ -44,4 +49,8 @@ public class Category extends BaseEntity<Category> {
     @JsonBackReference
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<Prompt> prompts;
+
+    public HomeRecord ToHomeRecord() {
+        return new HomeRecord(this.name);
+    }
 }
