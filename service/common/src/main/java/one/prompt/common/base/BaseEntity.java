@@ -58,7 +58,6 @@ public class BaseEntity<E extends BaseEntity<E>> {
      * Create time
      */
     @CreatedDate
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL")
     private LocalDateTime createTime;
 
@@ -73,7 +72,6 @@ public class BaseEntity<E extends BaseEntity<E>> {
      * Update time
      */
     @LastModifiedDate
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL")
     private LocalDateTime updateTime;
 

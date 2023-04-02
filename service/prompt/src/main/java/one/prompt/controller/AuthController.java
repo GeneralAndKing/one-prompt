@@ -2,12 +2,12 @@ package one.prompt.controller;
 
 import lombok.RequiredArgsConstructor;
 import one.prompt.common.client.WechatMiniClient;
+import one.prompt.common.model.UserToken;
 import one.prompt.common.model.wechat.MiniCodeRequest;
+import one.prompt.service.AuthService;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.http.HttpEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.ResponseEntity.ok;
 
@@ -23,17 +23,24 @@ record MiniCodeResponse(
 
 }
 
+record MiniAuthRequest(
+    String authCode
+) {
+}
+
 /**
  * 2023/4/2 15:32:12
  *
  * @author yue
  */
 @RestController
+@CrossOrigin
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
   private final WechatMiniClient wechatMiniClient;
+  private final AuthService authService;
   private static final int AUTH_CODE_COUNT = 8;
 
   @GetMapping("/code")
@@ -47,10 +54,15 @@ public class AuthController {
                 false,
                 "develop",
                 320
-            )),
+            ), authCode),
             authCode
         )
     );
+  }
+
+  @PostMapping("/wechat")
+  public HttpEntity<UserToken> wechat(@RequestBody MiniAuthRequest request) {
+    return ok(authService.auth(request.authCode()));
   }
 
 }

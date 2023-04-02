@@ -2,16 +2,20 @@ package one.prompt.controller;
 
 import lombok.RequiredArgsConstructor;
 import one.prompt.common.client.WechatMiniClient;
+import one.prompt.service.WechatService;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.ResponseEntity.ok;
 
 /**
- * @param code <a href="https://developers.weixin.qq.com/miniprogram/dev/api/open-api/login/wx.login.html">wx.login</a>
+ * @param code     <a href="https://developers.weixin.qq.com/miniprogram/dev/api/open-api/login/wx.login.html">wx.login</a>
+ * @param authCode login auth code
  */
 record WechatAuthRequest(
-    String code
+    String code,
+    String openId,
+    String authCode
 ) {
 }
 
@@ -45,6 +49,7 @@ record WechatPhoneResponse(
 public class WechatController {
 
   private final WechatMiniClient wechatMiniClient;
+  private final WechatService wechatService;
 
   @PostMapping("/auth")
   public HttpEntity<WechatAuthResponse> auth(@RequestBody WechatAuthRequest param) {
@@ -54,6 +59,12 @@ public class WechatController {
   @PostMapping("/phoneNumber")
   public HttpEntity<WechatPhoneResponse> phoneNumber(@RequestBody WechatAuthRequest param) {
     return ok(new WechatPhoneResponse(wechatMiniClient.getPhoneNumber(param.code())));
+  }
+
+  @PostMapping("/login")
+  public HttpEntity<String> login(@RequestBody WechatAuthRequest param) {
+    wechatService.login(param.code(), param.authCode(), param.openId());
+    return ok().build();
   }
 
 }

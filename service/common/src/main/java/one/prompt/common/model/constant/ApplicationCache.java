@@ -22,7 +22,11 @@ public enum ApplicationCache {
     /**
      * Wechat
      */
-    MINI_ACCESS_TOKEN("application:wechat:mini:accessToken");
+    MINI_ACCESS_TOKEN("application:wechat:mini:accessToken"),
+    /**
+     * Auth code
+     */
+    MINI_AUTH_CODE("application:wechat:mini:authCode:");
     private final String key;
   }
 

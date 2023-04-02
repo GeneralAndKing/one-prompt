@@ -18,6 +18,7 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 import static one.prompt.common.model.constant.ApplicationCache.Wechat.MINI_ACCESS_TOKEN;
+import static one.prompt.common.model.constant.ApplicationCache.Wechat.MINI_AUTH_CODE;
 import static one.prompt.common.model.constant.WechatInfo.GET_ACCESS_TOKEN;
 import static one.prompt.common.model.constant.WechatInfo.Mini.*;
 
@@ -111,7 +112,7 @@ public class WechatMiniClient {
     return response.phoneInfo().phoneNumber();
   }
 
-  public String getQrCode(MiniCodeRequest request) {
+  public String getQrCode(MiniCodeRequest request, String authCode) {
     String targetUri = UriComponentsBuilder.fromHttpUrl(GET_UN_LIMITED_QR_CODE.url())
         .queryParam("access_token", getAccessToken())
         .toUriString();
@@ -119,6 +120,7 @@ public class WechatMiniClient {
     if (Objects.isNull(bytes)) {
       throw WECHAT_EXCEPTION;
     }
+    redisTemplate.opsForValue().set(MINI_AUTH_CODE.key() + authCode, Boolean.FALSE.toString(), 1, TimeUnit.DAYS);
     return "data:image/jpg;base64," +  Base64.getEncoder().encodeToString(bytes);
   }
 }

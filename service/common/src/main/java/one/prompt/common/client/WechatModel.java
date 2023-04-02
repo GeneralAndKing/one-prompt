@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
  * @param errorCode    {@link WechatInfo.Mini#errorMessage(Integer)}
  * @param errorMessage {@link WechatInfo.Mini#errorMessage(Integer)}
  */
+@SuppressWarnings("SpellCheckingInspection")
 record AccessToken(
     @JsonProperty("access_token")
     String accessToken,
@@ -38,6 +39,7 @@ record AccessToken(
  * @param sessionKey   Current session key
  * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/union-id.html">UnionID 机制说明</a>
  */
+@SuppressWarnings("SpellCheckingInspection")
 record AuthResponse(
     @JsonProperty("errcode")
     Integer errorCode,
