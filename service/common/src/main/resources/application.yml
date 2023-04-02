@@ -13,5 +13,13 @@ spring:
     active: dev
   data:
     redis:
+      lettuce:
+        pool:
+          max-active: 10
+          max-wait: 240s
+          max-idle: 10
+          min-idle: 2
+          time-between-eviction-runs: 1
+          enabled: true
       host: 1.14.68.40
       database: 1
