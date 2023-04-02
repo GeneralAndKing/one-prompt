@@ -18,73 +18,75 @@
     </q-header>
 
     <q-drawer width="210" class="bg-black" show-if-above v-model="leftDrawerOpen" side="left">
-      <q-img class="q-mx-auto flex q-mt-lg" width="125px" src="https://resources.echocow.cn/prompt/logo-line.png"/>
-      <q-list style="margin-top: 20px" dense dark>
-        <q-expansion-item
-          icon="mail"
-          expand-icon-class="menu-icon"
-          label="Inbox">
-          <div style="margin-left: 40px; border-left: 1px solid #999999">
-            <q-item style="height: 20px" dense clickable v-ripple>
-              <q-item-section>全部</q-item-section>
-              <q-checkbox size="sm" :model-value="false" />
-            </q-item>
-            <q-item style="height: 20px" dense clickable v-ripple>
-              <q-item-section>动物</q-item-section>
-              <q-checkbox size="sm" :model-value="true" />
-            </q-item>
-            <q-item style="height: 20px" dense clickable v-ripple>
-              <q-item-section>哈哈哈</q-item-section>
-              <q-checkbox size="sm" :model-value="true" />
-            </q-item>
-            <q-item style="height: 20px" dense clickable v-ripple>
-              <q-item-section>啊啥啥啥</q-item-section>
-              <q-checkbox size="sm" :model-value="false" />
-            </q-item>
-          </div>
-        </q-expansion-item>
-        <q-expansion-item
-          icon="mail"
-          label="Inbox">
-          <div style="margin-left: 40px; border-left: 1px solid #999999">
-            <q-item style="height: 20px" dense clickable v-ripple>
-              <q-item-section>Icon as avatar</q-item-section>
-              <q-checkbox  />
-            </q-item>
-          </div>
-        </q-expansion-item>
-        <q-expansion-item
-          icon="mail"
-          label="Inbox">
-          <div style="margin-left: 40px; border-left: 1px solid #999999">
-            <q-item style="height: 20px" dense clickable v-ripple>
-              <q-item-section>Icon as avatar</q-item-section>
-              <q-checkbox  />
-            </q-item>
-          </div>
-        </q-expansion-item>
-        <q-expansion-item
-          icon="mail"
-          label="Inbox">
-          <div style="margin-left: 40px; border-left: 1px solid #999999">
-            <q-item style="height: 20px" dense clickable v-ripple>
-              <q-item-section>Icon as avatar</q-item-section>
-              <q-checkbox  />
-            </q-item>
-          </div>
-        </q-expansion-item>
-      </q-list>
+      <q-scroll-area style="height: calc(100% - 150px);">
+        <q-img class="q-mx-auto flex q-mt-lg" width="125px" src="https://resources.echocow.cn/prompt/logo-line.png"/>
+        <q-list style="margin-top: 20px" dense dark>
+          <q-expansion-item
+            icon="mail"
+            expand-icon-class="menu-icon"
+            label="Inbox">
+            <div style="margin-left: 40px; border-left: 1px solid #999999">
+              <q-item style="height: 20px" dense clickable v-ripple>
+                <q-item-section>全部</q-item-section>
+                <q-checkbox size="sm" :model-value="false" />
+              </q-item>
+              <q-item style="height: 20px" dense clickable v-ripple>
+                <q-item-section>动物</q-item-section>
+                <q-checkbox size="sm" :model-value="true" />
+              </q-item>
+              <q-item style="height: 20px" dense clickable v-ripple>
+                <q-item-section>哈哈哈</q-item-section>
+                <q-checkbox size="sm" :model-value="true" />
+              </q-item>
+              <q-item style="height: 20px" dense clickable v-ripple>
+                <q-item-section>啊啥啥啥</q-item-section>
+                <q-checkbox size="sm" :model-value="false" />
+              </q-item>
+            </div>
+          </q-expansion-item>
+          <q-expansion-item
+            icon="mail"
+            label="Inbox">
+            <div style="margin-left: 40px; border-left: 1px solid #999999">
+              <q-item style="height: 20px" dense clickable v-ripple>
+                <q-item-section>Icon as avatar</q-item-section>
+                <q-checkbox  />
+              </q-item>
+            </div>
+          </q-expansion-item>
+          <q-expansion-item
+            icon="mail"
+            label="Inbox">
+            <div style="margin-left: 40px; border-left: 1px solid #999999">
+              <q-item style="height: 20px" dense clickable v-ripple>
+                <q-item-section>Icon as avatar</q-item-section>
+                <q-checkbox  />
+              </q-item>
+            </div>
+          </q-expansion-item>
+          <q-expansion-item
+            icon="mail"
+            label="Inbox">
+            <div style="margin-left: 40px; border-left: 1px solid #999999">
+              <q-item style="height: 20px" dense clickable v-ripple>
+                <q-item-section>Icon as avatar</q-item-section>
+                <q-checkbox  />
+              </q-item>
+            </div>
+          </q-expansion-item>
+        </q-list>
+      </q-scroll-area>
     </q-drawer>
 
-    <q-drawer show-if-above v-model="rightDrawerOpen" side="right" bordered>
+<!--    <q-drawer show-if-above v-model="rightDrawerOpen" side="right" bordered>-->
       <!-- drawer content -->
-    </q-drawer>
+<!--    </q-drawer>-->
 
     <q-page-container>
       <router-view/>
     </q-page-container>
+    <login-dialog v-model="showLogin" />
   </q-layout>
-  <login-dialog v-model="showLogin" />
 </template>
 
 <script setup lang="ts">

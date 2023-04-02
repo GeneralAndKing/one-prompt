@@ -15,7 +15,7 @@
           transition="scale"
         >
           <q-img
-            class="list-item"
+            class="list-item cursor-pointer"
             :src="item.image"
           >
             <div class="list-action absolute-bottom">
@@ -67,7 +67,7 @@ onMounted(() => {
       user: 'Dolores Bond',
       avtar: `https://resources.echocow.cn/prompt/0${(i % 5) + 1}.jpeg`,
       like: i * 5,
-      image: `https://tuapi.eees.cc/api.php?category=dongman&type=302&a=${new Date().toISOString() + i}`
+      image: `https://random-picture.vercel.app/api?category=dongman&type=302&a=${new Date().toISOString() + i}`
     })
   }
   prompt.value = list
