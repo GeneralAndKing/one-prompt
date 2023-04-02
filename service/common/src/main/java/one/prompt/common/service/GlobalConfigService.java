@@ -1,6 +1,6 @@
 package one.prompt.common.service;
 
-import one.prompt.common.modal.constant.GlobalConfigKey;
+import one.prompt.common.model.constant.GlobalConfigKey;
 import one.prompt.common.entity.GlobalConfig;
 
 /**

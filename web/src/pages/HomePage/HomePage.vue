@@ -18,28 +18,7 @@
         <q-btn outline class="home-action-button" color="white" label="分享"/>
       </div>
     </div>
-    <div class="home-ai flex full-width justify-center">
-      <template v-for="channel in channelList" :key="`channel-${channel.id}`">
-        <q-card flat bordered class="home-ai-item">
-          <q-card-section horizontal>
-            <q-img
-              class="home-ai-item-img"
-              src="https://cdn.quasar.dev/img/parallax2.jpg"
-            />
-            <q-card-section class="channel-info row q-py-none column justify-between">
-              <div class="channel-content">
-                <div class="channel-name">{{ channel.name }}</div>
-                <div class="channel-description">{{ channel.description }}</div>
-              </div>
-              <div class="channel-action row justify-between items-center">
-                <q-btn style="width: 145px" rounded color="primary">立即查看</q-btn>
-                <div>学习</div>
-              </div>
-            </q-card-section>
-          </q-card-section>
-        </q-card>
-      </template>
-    </div>
+    <home-ai />
     <div class="home-category column">
       <div class="home-category-row row no-wrap overflow-hidden">
         <q-btn class="home-category-item">
@@ -182,41 +161,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-
-interface Channel {
-  id: number
-  name: string
-  image: string
-  description: string
-}
-
-const channelList = ref<Channel[]>([
-  {
-    id: 1,
-    name: 'chatGPT3',
-    image: 'https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/3f7e95cfbcf84497b46040f56139eb8b_mergeImage.png',
-    description: 'openai开发的人工智能聊天机器人程序，可以用人类自然对话方式来交互，用于甚为复杂的语言工作，包括自动生成文本、自动问答、自动摘要等多种任务。'
-  },
-  {
-    id: 2,
-    name: 'chatGPT3',
-    image: 'https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/3f7e95cfbcf84497b46040f56139eb8b_mergeImage.png',
-    description: 'openai开发的人工智能聊天机器人程序，可以用人类自然对话方式来交互，用于甚为复杂的语言工作，包括自动生成文本、自动问答、自动摘要等多种任务。'
-  },
-  {
-    id: 3,
-    name: 'chatGPT3',
-    image: 'https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/3f7e95cfbcf84497b46040f56139eb8b_mergeImage.png',
-    description: 'openai开发的人工智能聊天机器人程序，可以用人类自然对话方式来交互，用于甚为复杂的语言工作，包括自动生成文本、自动问答、自动摘要等多种任务。'
-  },
-  {
-    id: 4,
-    name: 'chatGPT3',
-    image: 'https://lanhu-dds-backend.oss-cn-beijing.aliyuncs.com/merge_image/imgs/3f7e95cfbcf84497b46040f56139eb8b_mergeImage.png',
-    description: 'openai开发的人工智能聊天机器人程序，可以用人类自然对话方式来交互，用于甚为复杂的语言工作，包括自动生成文本、自动问答、自动摘要等多种任务。'
-  }
-])
+import HomeAi from 'pages/HomePage/HomeAi.vue'
 
 </script>
 
@@ -309,34 +254,6 @@ const channelList = ref<Channel[]>([
 
   }
 
-  .home-ai {
-    margin: 100px 0;
-    gap: 40px;
-
-    .home-ai-item {
-      max-width: 700px;
-      height: 456px;
-      padding: 24px;
-      background-color: $dark-page;
-
-      .home-ai-item-img {
-        min-width: 349px;
-        height: 408px;
-      }
-
-      .channel-info {
-        .channel-name {
-          font-size: 44px;
-          font-weight: 500;
-        }
-
-        .channel-description {
-          margin-top: 40px;
-          font-size: 14px;
-        }
-      }
-    }
-  }
   .home-category {
     background-color: #061938;
     display: flex;

@@ -1,7 +1,7 @@
 package one.prompt.common.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import one.prompt.common.modal.constant.GlobalConfigKey;
+import one.prompt.common.model.constant.GlobalConfigKey;
 import one.prompt.common.repository.GlobalConfigRepository;
 import one.prompt.common.service.GlobalConfigService;
 import one.prompt.common.entity.GlobalConfig;

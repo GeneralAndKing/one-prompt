@@ -1,4 +1,4 @@
-package one.prompt.common.modal.constant;
+package one.prompt.common.model.constant;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

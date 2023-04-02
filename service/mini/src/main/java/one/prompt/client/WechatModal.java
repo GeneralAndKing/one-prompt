@@ -2,7 +2,7 @@ package one.prompt.client;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import one.prompt.common.modal.constant.WechatInfo;
+import one.prompt.common.model.constant.WechatInfo;
 
 import java.util.concurrent.TimeUnit;
 

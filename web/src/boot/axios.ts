@@ -1,5 +1,5 @@
 import { boot } from 'quasar/wrappers'
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -13,7 +13,41 @@ declare module '@vue/runtime-core' {
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-const api = axios.create({ baseURL: 'https://api.example.com' })
+const api = axios.create({
+  baseURL: '/api',
+  responseType: 'json'
+})
+
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('access_token')
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }
+
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
+
+api.interceptors.response.use(
+  (response) => {
+    return response.data
+  },
+  (error) => {
+    let errorMessage = '发生了一个错误，请稍后再试。'
+
+    if (error.response) {
+      const data = error.response.data
+      errorMessage = data.message || data.error
+    }
+
+    return Promise.reject(new Error(errorMessage))
+  }
+)
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api

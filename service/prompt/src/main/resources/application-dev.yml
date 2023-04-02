@@ -1,15 +1,3 @@
-spring:
-  jackson:
-    property-naming-strategy: SNAKE_CASE
-  jpa:
-    hibernate:
-      ddl-auto: update
-    open-in-view: true
-    show-sql: true
-  datasource:
-    url: jdbc:postgresql://1.14.68.40:5432/prompt
-    username: prompt
-    password: prompt@123456
 server:
   port: 9000
 

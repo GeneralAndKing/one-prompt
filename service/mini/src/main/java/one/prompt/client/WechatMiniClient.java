@@ -1,7 +1,8 @@
 package one.prompt.client;
 
 import lombok.RequiredArgsConstructor;
-import one.prompt.common.modal.constant.WechatInfo;
+import one.prompt.common.model.constant.ApplicationCache;
+import one.prompt.common.model.constant.WechatInfo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
@@ -12,9 +13,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-import static one.prompt.common.modal.constant.ApplicationCache.Wechat.MINI_ACCESS_TOKEN;
-import static one.prompt.common.modal.constant.WechatInfo.GET_ACCESS_TOKEN;
-import static one.prompt.common.modal.constant.WechatInfo.Mini.*;
+import static one.prompt.common.model.constant.ApplicationCache.Wechat.MINI_ACCESS_TOKEN;
+import static one.prompt.common.model.constant.WechatInfo.GET_ACCESS_TOKEN;
+import static one.prompt.common.model.constant.WechatInfo.Mini.*;
 
 /**
  * 2023/4/1 02:06:31
@@ -30,7 +31,7 @@ public class WechatMiniClient {
 
   /**
    * Get wechat mini program request access token.
-   * It will get from cache, key {@link one.prompt.common.modal.constant.ApplicationCache.Wechat#MINI_ACCESS_TOKEN},
+   * It will get from cache, key {@link ApplicationCache.Wechat#MINI_ACCESS_TOKEN},
    * and expire is from {@link AccessToken#expiresIn()}. Maximum time is 2 hours(7200 seconds).
    * <p>
    * If application can not get value from cache, it will request from wechat and set to cache.

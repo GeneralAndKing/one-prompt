@@ -1,7 +1,7 @@
 package one.prompt.common.config;
 
 import lombok.RequiredArgsConstructor;
-import one.prompt.common.modal.constant.WechatInfo;
+import one.prompt.common.model.constant.WechatInfo;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -13,7 +13,7 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import one.prompt.common.base.BaseEntity;
-import one.prompt.common.modal.constant.GlobalConfigKey;
+import one.prompt.common.model.constant.GlobalConfigKey;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.hibernate.Hibernate;
