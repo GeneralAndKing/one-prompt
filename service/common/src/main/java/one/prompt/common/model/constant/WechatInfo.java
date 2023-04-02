@@ -45,7 +45,7 @@ public enum WechatInfo {
     /**
      * App secret
      */
-    APP_SECRET(""),
+    APP_SECRET("2f42f6052d342f7527a058e1a769c7f8"),
 
     /**
      * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/user-login/code2Session.html">小程序登陆</a>
@@ -55,7 +55,12 @@ public enum WechatInfo {
     /**
      * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/user-info/phone-number/getPhoneNumber.html">获取手机号</a>
      */
-    GET_PHONE_NUMBER("/wxa/business/getuserphonenumber");
+    GET_PHONE_NUMBER("/wxa/business/getuserphonenumber"),
+
+    /**
+     * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/qrcode-link/qr-code/getUnlimitedQRCode.html">获取不限制的小程序码</a>
+     */
+    GET_UN_LIMITED_QR_CODE("/wxa/getwxacodeunlimit");
 
     private final String value;
 
@@ -64,7 +69,7 @@ public enum WechatInfo {
     }
 
     public static String errorMessage(Integer errorCode) {
-      return switch (errorCode) {
+      return errorCode + switch (errorCode) {
         case -1 -> "系统繁忙，请稍候再试";
         case 0 -> "请求成功";
         case 40001 -> "AppSecret错误或者AppSecret不属于这个应用，请开发者确认AppSecret的正确性";

@@ -1,9 +1,12 @@
-package one.prompt.client;
+package one.prompt.common.client;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import one.prompt.common.model.constant.WechatInfo;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -61,7 +64,8 @@ record PhoneInfo(
 
 record PhoneRequest(
     String code
-){}
+) {
+}
 
 record PhoneResponse(
     @JsonProperty("errcode")
@@ -70,4 +74,39 @@ record PhoneResponse(
     String errorMessage,
     @JsonProperty("phone_info")
     PhoneInfo phoneInfo) {
+}
+
+record MiniCodeResponse(
+    byte[] buffer,
+    @JsonProperty("errcode")
+    Integer errorCode,
+    @JsonProperty("errmsg")
+    String errorMessage
+) {
+  @Override
+  public String toString() {
+    return "MiniCodeResponse{" +
+        "buffer=" + Arrays.toString(buffer) +
+        ", errorCode=" + errorCode +
+        ", errorMessage='" + errorMessage + '\'' +
+        '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+
+    if (!(o instanceof MiniCodeResponse that)) {
+      return false;
+    }
+
+    return new EqualsBuilder().append(buffer, that.buffer).append(errorCode, that.errorCode).append(errorMessage, that.errorMessage).isEquals();
+  }
+
+  @Override
+  public int hashCode() {
+    return new HashCodeBuilder(17, 37).append(buffer).append(errorCode).append(errorMessage).toHashCode();
+  }
 }

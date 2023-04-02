@@ -4,7 +4,7 @@
       <img class="home-nav-logo q-ml-xl" alt="logo" src="https://resources.echocow.cn/prompt/logo-line.png"/>
       <div class="home-nav-action xs-hide q-mr-sm-xl lt-q-mr-none">
         <q-btn class="home-nav-button" style="margin-right: 24px" flat rounded color="white" label="注册"/>
-        <q-btn class="home-nav-button" unelevated rounded color="primary" label="登陆"/>
+        <q-btn class="home-nav-button" unelevated rounded color="primary" @click="showLogin = true" label="登陆"/>
       </div>
     </div>
     <div class="home-main flex justify-center column">
@@ -157,11 +157,16 @@
         二维码
       </div>
     </div>
+    <login-dialog v-model="showLogin" />
   </div>
 </template>
 
 <script setup lang="ts">
 import HomeAi from 'pages/HomePage/HomeAi.vue'
+import LoginDialog from 'components/LoginDialog.vue'
+import { ref } from 'vue'
+
+const showLogin = ref(false)
 
 </script>
 

@@ -1,15 +1,19 @@
-package one.prompt.client;
+package one.prompt.common.client;
 
 import lombok.RequiredArgsConstructor;
 import one.prompt.common.model.constant.ApplicationCache;
 import one.prompt.common.model.constant.WechatInfo;
+import one.prompt.common.model.exception.WechatException;
+import one.prompt.common.model.wechat.MiniCodeRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Base64;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -28,6 +32,7 @@ public class WechatMiniClient {
 
   private final RestTemplate wechatRestTemplate;
   private final RedisTemplate<String, String> redisTemplate;
+  private static final WechatException WECHAT_EXCEPTION = new WechatException(HttpStatus.INTERNAL_SERVER_ERROR, "微信令牌请求失败");
 
   /**
    * Get wechat mini program request access token.
@@ -52,12 +57,10 @@ public class WechatMiniClient {
         .toUriString();
     AccessToken accessToken = wechatRestTemplate.getForObject(targetUri, AccessToken.class);
     if (Objects.isNull(accessToken)) {
-      // TODO: It should throw exception.
-      return "微信令牌请求失败";
+      throw WECHAT_EXCEPTION;
     }
     if (StringUtils.isEmpty(accessToken.accessToken())) {
-      // TODO: It should throw exception.
-      return WechatInfo.Mini.errorMessage(accessToken.errorCode());
+      throw new WechatException(HttpStatus.INTERNAL_SERVER_ERROR, WechatInfo.Mini.errorMessage(accessToken.errorCode()));
     }
     valueOperations.set(MINI_ACCESS_TOKEN.key(), accessToken.accessToken(), accessToken.expiresIn(), TimeUnit.SECONDS);
     return accessToken.accessToken();
@@ -79,12 +82,10 @@ public class WechatMiniClient {
         .toUriString();
     AuthResponse authResponse = wechatRestTemplate.getForObject(targetUri, AuthResponse.class);
     if (Objects.isNull(authResponse)) {
-      // TODO: It should throw exception.
-      return "微信请求失败";
+      throw WECHAT_EXCEPTION;
     }
     if (StringUtils.isEmpty(authResponse.openid())) {
-      // TODO: It should throw exception.
-      return WechatInfo.Mini.errorMessage(authResponse.errorCode());
+      throw new WechatException(HttpStatus.INTERNAL_SERVER_ERROR, WechatInfo.Mini.errorMessage(authResponse.errorCode()));
     }
     return authResponse.openid();
   }
@@ -102,13 +103,22 @@ public class WechatMiniClient {
         .toUriString();
     PhoneResponse response = wechatRestTemplate.postForObject(targetUri, new PhoneRequest(code), PhoneResponse.class);
     if (Objects.isNull(response) || Objects.isNull(response.phoneInfo())) {
-      // TODO: It should throw exception.
-      return "微信请求失败";
+      throw WECHAT_EXCEPTION;
     }
     if (StringUtils.isEmpty(response.phoneInfo().phoneNumber())) {
-      // TODO: It should throw exception.
-      return WechatInfo.Mini.errorMessage(response.errorCode());
+      throw new WechatException(HttpStatus.INTERNAL_SERVER_ERROR, WechatInfo.Mini.errorMessage(response.errorCode()));
     }
     return response.phoneInfo().phoneNumber();
+  }
+
+  public String getQrCode(MiniCodeRequest request) {
+    String targetUri = UriComponentsBuilder.fromHttpUrl(GET_UN_LIMITED_QR_CODE.url())
+        .queryParam("access_token", getAccessToken())
+        .toUriString();
+    byte[] bytes = wechatRestTemplate.postForObject(targetUri, request, byte[].class);
+    if (Objects.isNull(bytes)) {
+      throw WECHAT_EXCEPTION;
+    }
+    return "data:image/jpg;base64," +  Base64.getEncoder().encodeToString(bytes);
   }
 }

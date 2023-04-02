@@ -1,7 +1,7 @@
 package one.prompt.controller;
 
 import lombok.RequiredArgsConstructor;
-import one.prompt.client.WechatMiniClient;
+import one.prompt.common.client.WechatMiniClient;
 import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.*;
 
