@@ -9,7 +9,11 @@
             <q-icon name="search" />
           </template>
         </q-input>
-        <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
+        <div class="flex q-gutter-md">
+          <q-btn class="home-nav-button" style="margin-right: 24px" flat rounded color="white" label="注册"/>
+          <q-btn class="home-nav-button" unelevated rounded color="primary" @click="showLogin = true" label="登陆"/>
+          <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
+        </div>
       </q-toolbar>
     </q-header>
 
@@ -79,12 +83,14 @@
     <q-page-container>
       <router-view/>
     </q-page-container>
-
   </q-layout>
+  <login-dialog v-model="showLogin" />
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import LoginDialog from 'components/LoginDialog.vue'
+const showLogin = ref(false)
 
 const leftDrawerOpen = ref(false)
 const rightDrawerOpen = ref(false)
