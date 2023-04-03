@@ -21,8 +21,9 @@
 <script lang="ts" setup>
 
 import { ref, watch } from 'vue'
-import { authCode, authMini } from 'src/api/Auth'
+import { authCodeMini, authMini } from 'src/api/Auth'
 import { AuthCode } from 'src/model/Auth'
+import {useApplicationStore} from '@/stores/useApplicationStore'
 
 interface LoginProps {
   modelValue: boolean
@@ -34,13 +35,14 @@ const emit = defineEmits(['update:modelValue'])
 const code = ref<AuthCode | null>(null)
 const interval = ref<ReturnType<typeof setInterval> | null>(null)
 const updateValue = (value: boolean) => emit('update:modelValue', value)
+const applicationStore = useApplicationStore()
 
 watch(() => props.modelValue, async (val: boolean) => {
   if (interval.value !== null) {
     clearInterval(interval.value)
   }
   if (val) {
-    code.value = await authCode()
+    code.value = await authCodeMini()
     interval.value = setInterval(async () => {
       if (code.value === null) {
         return
@@ -48,6 +50,7 @@ watch(() => props.modelValue, async (val: boolean) => {
       const token = await authMini(code.value.authCode)
       if (token.accessToken !== null && interval.value !== null) {
         clearInterval(interval.value)
+        applicationStore.setToken(token)
       }
     }, 3000)
   } else {

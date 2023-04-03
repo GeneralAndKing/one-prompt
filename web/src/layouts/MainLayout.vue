@@ -17,7 +17,7 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer width="210" class="bg-black" show-if-above v-model="leftDrawerOpen" side="left">
+    <q-drawer :width="210" class="bg-black" show-if-above v-model="leftDrawerOpen" side="left">
       <q-scroll-area style="height: calc(100% - 150px);">
         <q-img class="q-mx-auto flex q-mt-lg" width="125px" src="https://resources.echocow.cn/prompt/logo-line.png"/>
         <q-list style="margin-top: 20px" dense dark>

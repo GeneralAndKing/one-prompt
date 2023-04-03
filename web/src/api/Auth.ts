@@ -1,8 +1,8 @@
-import { api } from 'boot/axios'
-import { AuthCode, UserToken } from 'src/model/Auth'
+import { AuthCode, UserToken } from '@/model/Auth'
+import { api } from '@/boot/axios'
 
-export const authCode = (): Promise<AuthCode> =>
-  api.get('/auth/code')
+export const authCodeMini = (): Promise<AuthCode> =>
+  api.get('/auth/code/mini')
 
 export const authMini = (authCode: string): Promise<UserToken> =>
   api.post('/auth/mini', { authCode })
