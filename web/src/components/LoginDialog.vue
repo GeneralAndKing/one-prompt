@@ -21,7 +21,7 @@
 <script lang="ts" setup>
 
 import { ref, watch } from 'vue'
-import { authCode, authWechat } from 'src/api/Auth'
+import { authCode, authMini } from 'src/api/Auth'
 import { AuthCode } from 'src/model/Auth'
 
 interface LoginProps {
@@ -45,11 +45,11 @@ watch(() => props.modelValue, async (val: boolean) => {
       if (code.value === null) {
         return
       }
-      const token = await authWechat(code.value.authCode)
+      const token = await authMini(code.value.authCode)
       if (token.accessToken !== null && interval.value !== null) {
         clearInterval(interval.value)
       }
-    }, 1000)
+    }, 3000)
   } else {
     code.value = null
   }

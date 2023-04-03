@@ -7,19 +7,22 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.processing.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QGlobalConfig is a Querydsl query type for GlobalConfig
+ * QSysUser is a Querydsl query type for SysUser
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QGlobalConfig extends EntityPathBase<GlobalConfig> {
+public class QSysUser extends EntityPathBase<SysUser> {
 
-    private static final long serialVersionUID = -1515750961L;
+    private static final long serialVersionUID = -327293714L;
 
-    public static final QGlobalConfig globalConfig = new QGlobalConfig("globalConfig");
+    public static final QSysUser sysUser = new QSysUser("sysUser");
 
     public final one.prompt.common.base.QBaseEntity _super = new one.prompt.common.base.QBaseEntity(this);
+
+    public final ListPath<Comment, QComment> comments = this.<Comment, QComment>createList("comments", Comment.class, QComment.class, PathInits.DIRECT2);
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createTime = _super.createTime;
@@ -33,10 +36,16 @@ public class QGlobalConfig extends EntityPathBase<GlobalConfig> {
     //inherited
     public final NumberPath<Long> id = _super.id;
 
-    public final EnumPath<one.prompt.common.model.constant.GlobalConfigKey> key = createEnum("key", one.prompt.common.model.constant.GlobalConfigKey.class);
+    public final ListPath<Prompt, QPrompt> likedPrompts = this.<Prompt, QPrompt>createList("likedPrompts", Prompt.class, QPrompt.class, PathInits.DIRECT2);
+
+    public final StringPath name = createString("name");
+
+    public final StringPath phone = createString("phone");
 
     //inherited
     public final StringPath remark = _super.remark;
+
+    public final ListPath<Prompt, QPrompt> sharedPrompts = this.<Prompt, QPrompt>createList("sharedPrompts", Prompt.class, QPrompt.class, PathInits.DIRECT2);
 
     //inherited
     public final NumberPath<Integer> sort = _super.sort;
@@ -47,18 +56,18 @@ public class QGlobalConfig extends EntityPathBase<GlobalConfig> {
     //inherited
     public final StringPath updateUser = _super.updateUser;
 
-    public final StringPath value = createString("value");
+    public final StringPath wechatId = createString("wechatId");
 
-    public QGlobalConfig(String variable) {
-        super(GlobalConfig.class, forVariable(variable));
+    public QSysUser(String variable) {
+        super(SysUser.class, forVariable(variable));
     }
 
-    public QGlobalConfig(Path<? extends GlobalConfig> path) {
+    public QSysUser(Path<? extends SysUser> path) {
         super(path.getType(), path.getMetadata());
     }
 
-    public QGlobalConfig(PathMetadata metadata) {
-        super(GlobalConfig.class, metadata);
+    public QSysUser(PathMetadata metadata) {
+        super(SysUser.class, metadata);
     }
 
 }

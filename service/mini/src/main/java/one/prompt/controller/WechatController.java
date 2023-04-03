@@ -51,6 +51,11 @@ public class WechatController {
   private final WechatMiniClient wechatMiniClient;
   private final WechatService wechatService;
 
+  @GetMapping("/hello")
+  public HttpEntity<String> hello() {
+    return ok("hello");
+  }
+
   @PostMapping("/auth")
   public HttpEntity<WechatAuthResponse> auth(@RequestBody WechatAuthRequest param) {
     return ok(new WechatAuthResponse(wechatMiniClient.authOpenId(param.code())));

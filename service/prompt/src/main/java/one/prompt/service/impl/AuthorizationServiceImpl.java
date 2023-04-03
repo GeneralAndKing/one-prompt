@@ -6,7 +6,7 @@ import one.prompt.common.model.UserToken;
 import one.prompt.common.model.constant.ApplicationCache;
 import one.prompt.common.repository.SysUserRepository;
 import one.prompt.common.service.TokenService;
-import one.prompt.service.AuthService;
+import one.prompt.service.AuthorizationService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
  */
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImpl implements AuthService {
+public class AuthorizationServiceImpl implements AuthorizationService {
 
   private final SysUserRepository sysUserRepository;
   private final RedisTemplate<String, String> redisTemplate;
@@ -28,7 +28,7 @@ public class AuthServiceImpl implements AuthService {
   private static final int MIN_PHONE_NUMBER = 8;
 
   @Override
-  public UserToken auth(String authCode) {
+  public UserToken miniAuth(String authCode) {
     String key = ApplicationCache.Wechat.MINI_AUTH_CODE.key() + authCode;
     String phone = redisTemplate.opsForValue().get(key);
     if (StringUtils.isBlank(phone)) {

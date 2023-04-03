@@ -36,9 +36,7 @@ public class WechatMiniClient {
   private static final WechatException WECHAT_EXCEPTION = new WechatException(HttpStatus.INTERNAL_SERVER_ERROR, "微信令牌请求失败");
 
   /**
-   * Get wechat mini program request access token.
-   * It will get from cache, key {@link ApplicationCache.Wechat#MINI_ACCESS_TOKEN},
-   * and expire is from {@link AccessToken#expiresIn()}. Maximum time is 2 hours(7200 seconds).
+   * Get wechat mini program request access token. It will get from cache, key {@link ApplicationCache.Wechat#MINI_ACCESS_TOKEN}, and expire is from {@link AccessToken#expiresIn()}. Maximum time is 2 hours(7200 seconds).
    * <p>
    * If application can not get value from cache, it will request from wechat and set to cache.
    * </p>
@@ -112,6 +110,13 @@ public class WechatMiniClient {
     return response.phoneInfo().phoneNumber();
   }
 
+  /**
+   * 生成小程序码
+   *
+   * @param request  请求
+   * @param authCode 授权码
+   * @return base 64 编码
+   */
   public String getQrCode(MiniCodeRequest request, String authCode) {
     String targetUri = UriComponentsBuilder.fromHttpUrl(GET_UN_LIMITED_QR_CODE.url())
         .queryParam("access_token", getAccessToken())
@@ -121,6 +126,6 @@ public class WechatMiniClient {
       throw WECHAT_EXCEPTION;
     }
     redisTemplate.opsForValue().set(MINI_AUTH_CODE.key() + authCode, Boolean.FALSE.toString(), 1, TimeUnit.DAYS);
-    return "data:image/jpg;base64," +  Base64.getEncoder().encodeToString(bytes);
+    return "data:image/jpg;base64," + Base64.getEncoder().encodeToString(bytes);
   }
 }

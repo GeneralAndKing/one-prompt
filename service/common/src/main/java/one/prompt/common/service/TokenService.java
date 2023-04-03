@@ -10,6 +10,12 @@ import one.prompt.common.model.UserToken;
  */
 public interface TokenService {
 
+  /**
+   * 构建令牌信息
+   *
+   * @param user 登录用户
+   * @return 令牌
+   */
   UserToken buildToken(SysUser user);
 
 }

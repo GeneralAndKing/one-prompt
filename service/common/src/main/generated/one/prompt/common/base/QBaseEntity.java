@@ -25,11 +25,7 @@ public class QBaseEntity extends EntityPathBase<BaseEntity<?>> {
 
     public final BooleanPath deleted = createBoolean("deleted");
 
-    public final BooleanPath enabled = createBoolean("enabled");
-
     public final NumberPath<Long> id = createNumber("id", Long.class);
-
-    public final StringPath name = createString("name");
 
     public final StringPath remark = createString("remark");
 

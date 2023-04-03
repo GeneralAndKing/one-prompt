@@ -10,16 +10,18 @@ import com.querydsl.core.types.Path;
 
 
 /**
- * QGlobalConfig is a Querydsl query type for GlobalConfig
+ * QTag is a Querydsl query type for Tag
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QGlobalConfig extends EntityPathBase<GlobalConfig> {
+public class QTag extends EntityPathBase<Tag> {
 
-    private static final long serialVersionUID = -1515750961L;
+    private static final long serialVersionUID = -326205616L;
 
-    public static final QGlobalConfig globalConfig = new QGlobalConfig("globalConfig");
+    public static final QTag tag = new QTag("tag");
 
     public final one.prompt.common.base.QBaseEntity _super = new one.prompt.common.base.QBaseEntity(this);
+
+    public final StringPath color = createString("color");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createTime = _super.createTime;
@@ -33,7 +35,7 @@ public class QGlobalConfig extends EntityPathBase<GlobalConfig> {
     //inherited
     public final NumberPath<Long> id = _super.id;
 
-    public final EnumPath<one.prompt.common.model.constant.GlobalConfigKey> key = createEnum("key", one.prompt.common.model.constant.GlobalConfigKey.class);
+    public final StringPath name = createString("name");
 
     //inherited
     public final StringPath remark = _super.remark;
@@ -47,18 +49,18 @@ public class QGlobalConfig extends EntityPathBase<GlobalConfig> {
     //inherited
     public final StringPath updateUser = _super.updateUser;
 
-    public final StringPath value = createString("value");
+    public final BooleanPath verified = createBoolean("verified");
 
-    public QGlobalConfig(String variable) {
-        super(GlobalConfig.class, forVariable(variable));
+    public QTag(String variable) {
+        super(Tag.class, forVariable(variable));
     }
 
-    public QGlobalConfig(Path<? extends GlobalConfig> path) {
+    public QTag(Path<? extends Tag> path) {
         super(path.getType(), path.getMetadata());
     }
 
-    public QGlobalConfig(PathMetadata metadata) {
-        super(GlobalConfig.class, metadata);
+    public QTag(PathMetadata metadata) {
+        super(Tag.class, metadata);
     }
 
 }
