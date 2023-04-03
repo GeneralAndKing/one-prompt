@@ -1,7 +1,7 @@
 package one.prompt.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import one.prompt.dto.PublicPrompt;
+import one.prompt.model.dto.PublicPrompt;
 import one.prompt.entity.Prompt;
 import one.prompt.entity.Tag;
 import one.prompt.repository.PromptRepository;

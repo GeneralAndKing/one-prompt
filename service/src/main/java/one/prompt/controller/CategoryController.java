@@ -1,7 +1,7 @@
 package one.prompt.controller;
 
 import lombok.RequiredArgsConstructor;
-import one.prompt.dto.PublicPrompt;
+import one.prompt.model.dto.PublicPrompt;
 import one.prompt.entity.Category;
 import one.prompt.repository.CategoryRepository;
 import one.prompt.service.CategoryService;

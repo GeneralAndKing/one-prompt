@@ -1,4 +1,4 @@
-package one.prompt.dto;
+package one.prompt.model.dto;
 
 import lombok.Data;
 

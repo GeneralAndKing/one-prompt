@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import one.prompt.context.MockSecretContextHolder;
 import one.prompt.entity.SysUser;
 import one.prompt.repository.PromptRepository;
-import one.prompt.dto.CommentRequest;
+import one.prompt.model.dto.CommentRequest;
 import one.prompt.entity.Comment;
 import one.prompt.entity.Prompt;
 import one.prompt.service.PromptService;

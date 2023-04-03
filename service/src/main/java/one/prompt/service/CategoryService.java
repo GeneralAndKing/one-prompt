@@ -2,7 +2,7 @@ package one.prompt.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import one.prompt.dto.PublicPrompt;
+import one.prompt.model.dto.PublicPrompt;
 
 import java.util.List;
 
