@@ -15,5 +15,3 @@ pluginManagement {
 }
 
 rootProject.name = "service"
-
-include(":official", ":prompt", ":common", ":mini")

@@ -1,0 +1,28 @@
+server:
+  port: 9000
+spring:
+  datasource:
+    url: jdbc:postgresql://1.14.68.40:5432/prompt
+    username: prompt
+    password: prompt@123456
+  jpa:
+    show-sql: true
+    open-in-view: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+  data:
+    redis:
+      lettuce:
+        pool:
+          max-active: 10
+          max-wait: 240s
+          max-idle: 10
+          min-idle: 2
+          time-between-eviction-runs: 1h
+          enabled: true
+      host: 1.14.68.40
+      database: 1
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html

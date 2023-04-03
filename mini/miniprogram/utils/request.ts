@@ -22,7 +22,7 @@ const http = <T>(url: string, data?: any, method: HttpMethod = HttpMethod.GET, o
     // @ts-ignore
     ...restOptions.headers
   }
-  const baseUrl = wx.getStorageSync('baseUrl') || 'http://127.0.0.1:9002'
+  const baseUrl = wx.getStorageSync('baseUrl') || 'http://127.0.0.1:9000'
   return new Promise<T>((resolve, reject) => {
     wx.request({
       url: baseUrl + url,
