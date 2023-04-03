@@ -30,14 +30,14 @@ public class Comment extends BaseEntity<Comment> {
     @ManyToOne()
     @JsonManagedReference
     @JoinColumn(name = "prompt_id")
-    Prompt prompt;
+    private Prompt prompt;
 
     @Column(name = "title", columnDefinition = "varchar(255)")
-    String title;
+    private String title;
 
     @Column(name = "content", columnDefinition = "text")
-    String content;
+    private String content;
 
     @Column(name = "verified", columnDefinition = "boolean default false")
-    Boolean verified;
+    private Boolean verified;
 }

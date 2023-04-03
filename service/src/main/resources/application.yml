@@ -23,6 +23,12 @@ spring:
           enabled: true
       host: 1.14.68.40
       database: 1
+    web:
+      pageable:
+        default-page-size: 10
+        page-parameter: page
+        size-parameter: size
+
 springdoc:
   swagger-ui:
     path: /swagger-ui.html

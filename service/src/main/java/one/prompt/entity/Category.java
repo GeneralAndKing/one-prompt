@@ -28,10 +28,6 @@ import java.util.List;
 @SQLDelete(sql = "UPDATE category SET deleted=true WHERE id=?")
 public class Category extends BaseEntity<Category> {
 
-    public record HomeRecord(
-            String name
-    ) {
-    }
 
     @ManyToOne()
     @JsonManagedReference
@@ -43,14 +39,23 @@ public class Category extends BaseEntity<Category> {
     private String name;
 
     @Column(name = "description", columnDefinition = "text")
-    String description;
+    private String description;
 
     @ToString.Exclude
     @JsonBackReference
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    List<Prompt> prompts;
+    private List<Prompt> prompts;
 
-    public HomeRecord toHomeRecord() {
-        return new HomeRecord(this.name);
+
+    public record HomeCategory(
+            String model,
+            Long modelId,
+            String name,
+            Long id
+    ) {
+    }
+
+    public HomeCategory toHomeCategory() {
+        return new HomeCategory(this.getModel().getName(), this.getModel().getId(), this.getName(), this.getId());
     }
 }

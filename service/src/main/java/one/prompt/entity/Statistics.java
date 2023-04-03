@@ -28,14 +28,14 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Statistics extends BaseEntity<Statistics> {
     @OneToOne
     @JoinColumn(name = "prompt_id")
-    Prompt prompt;
+    private Prompt prompt;
 
     @Column(name = "liked", columnDefinition = "bigint default 0")
-    Long liked;
+    private Long liked;
 
     @Column(name = "watch", columnDefinition = "bigint default 0")
-    Long watch;
+    private Long watch;
 
     @Column(name = "star", columnDefinition = "float default 0")
-    Float star;
+    private Float star;
 }

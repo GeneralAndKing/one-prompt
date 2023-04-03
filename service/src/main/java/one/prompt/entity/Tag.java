@@ -24,12 +24,12 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @SQLDelete(sql = "UPDATE tag SET deleted=true WHERE id=?")
 public class Tag extends BaseEntity<Tag> {
     @Column(name = "name", columnDefinition = "varchar(255)")
-    String name;
+    private String name;
 
     @Column(name = "color", columnDefinition = "varchar(255)")
-    String color;
+    private String color;
 
 
     @Column(name = "verified", columnDefinition = "boolean default false")
-    Boolean verified;
+    private Boolean verified;
 }

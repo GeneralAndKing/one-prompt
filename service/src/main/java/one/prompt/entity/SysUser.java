@@ -32,20 +32,20 @@ import java.util.List;
 @AllArgsConstructor
 public class SysUser extends BaseEntity<SysUser> implements UserDetails {
     @Column(name = "name", columnDefinition = "varchar(255)")
-    String name;
+    private String name;
 
     @Column(name = "wechatId", columnDefinition = "varchar(255)")
-    String wechatId;
+    private String wechatId;
 
     @Column(name = "phone", columnDefinition = "varchar(255)")
-    String phone;
+    private String phone;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "user_prompt_liked_relation",
             joinColumns = @JoinColumn(name = "sys_user_id"),
             inverseJoinColumns = @JoinColumn(name = "prompt_id"))
     @ToString.Exclude
-    List<Prompt> likedPrompts;
+    private List<Prompt> likedPrompts;
 
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -53,14 +53,14 @@ public class SysUser extends BaseEntity<SysUser> implements UserDetails {
             joinColumns = @JoinColumn(name = "sys_user_id"),
             inverseJoinColumns = @JoinColumn(name = "prompt_id"))
     @ToString.Exclude
-    List<Prompt> sharedPrompts;
+    private List<Prompt> sharedPrompts;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "user_comment_relation",
             joinColumns = @JoinColumn(name = "sys_user_id"),
             inverseJoinColumns = @JoinColumn(name = "comment_id"))
     @ToString.Exclude
-    List<Comment> comments;
+    private List<Comment> comments;
 
 
     @Override

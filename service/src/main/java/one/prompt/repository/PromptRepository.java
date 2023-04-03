@@ -16,9 +16,8 @@ import java.util.Collection;
 @Repository
 public interface PromptRepository extends BaseRepository<Prompt> {
 
-    Page<Prompt> findAllByCategoryIdAndTagsIn(Long categoryId, Collection<Tag> tags, Pageable pageable);
+    Page<Prompt> findAllByCategoryIdIn(Collection<Long> categoryIds,Pageable pageable);
 
-    Page<Prompt> findAllByCategoryId(Long categoryId, Pageable pageable);
 
     @Query(
             value = "SELECT * FROM prompt right join user_prompt_liked_relation uplr on prompt.id = uplr.prompt_id WHERE prompt_id=:id and sys_user_id=:sysUserId",

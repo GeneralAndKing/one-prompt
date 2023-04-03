@@ -1,7 +1,7 @@
 package one.prompt.controller;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import one.prompt.entity.Category;
 import one.prompt.entity.Model;
 import one.prompt.repository.CategoryRepository;
 import one.prompt.repository.ModelRepository;
@@ -16,17 +16,15 @@ import java.util.List;
  * @author klein
  */
 @RestController
-@RequestMapping("/model")
+@RequestMapping()
 @RequiredArgsConstructor
-@Slf4j
-public class ModelController {
+public class MixController {
 
     private final ModelRepository modelRepository;
 
-
-    @GetMapping()
-    public ResponseEntity<List<Model.HomeModel>> getAll() {
-        return ResponseEntity.ok(modelRepository.findAll().stream().map(Model::toHomeModel).toList());
+    @GetMapping("/navigation")
+    public ResponseEntity<List<Model.Navigation>> getAllNavigations() {
+        return ResponseEntity.ok(modelRepository.findAll().stream().map(Model::toNavigation).toList());
     }
 
 }

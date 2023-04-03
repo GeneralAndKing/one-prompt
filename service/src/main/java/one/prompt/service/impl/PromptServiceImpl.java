@@ -3,10 +3,13 @@ package one.prompt.service.impl;
 import lombok.RequiredArgsConstructor;
 import one.prompt.context.MockSecretContextHolder;
 import one.prompt.entity.*;
-import one.prompt.repository.*;
 import one.prompt.model.dto.CommentRequest;
 import one.prompt.model.dto.PromptRequest;
+import one.prompt.repository.*;
 import one.prompt.service.PromptService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -82,6 +85,18 @@ public class PromptServiceImpl implements PromptService {
         sysUser.getSharedPrompts().add(saved);
         sysUserRepository.save(sysUser);
         return saved;
+    }
+
+    @Override
+    public Page<Prompt.PublicPrompt> getPublicPromptsByCategoryIds(List<Long> categoryIds, Pageable pageable) {
+        Page<Prompt> prompts;
+        if (categoryIds.size() == 0) {
+            prompts = promptRepository.findAll(pageable);
+        } else {
+            prompts = promptRepository.findAllByCategoryIdIn(categoryIds, pageable);
+        }
+        return new PageImpl<>(prompts.getContent().stream().map(Prompt::toPublicPrompt).toList(),
+                prompts.getPageable(), prompts.getTotalElements());
     }
 
 

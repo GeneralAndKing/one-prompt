@@ -2,16 +2,21 @@ package one.prompt.controller;
 
 import lombok.RequiredArgsConstructor;
 import one.prompt.context.MockSecretContextHolder;
-import one.prompt.entity.SysUser;
-import one.prompt.repository.PromptRepository;
-import one.prompt.model.dto.CommentRequest;
 import one.prompt.entity.Comment;
 import one.prompt.entity.Prompt;
+import one.prompt.entity.SysUser;
+import one.prompt.model.dto.CommentRequest;
+import one.prompt.repository.PromptRepository;
 import one.prompt.service.PromptService;
+import org.springdoc.core.converters.models.PageableAsQueryParam;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 /**
  * @author klein
@@ -24,6 +29,13 @@ public class PromptController {
     private final PromptRepository promptRepository;
 
     private final PromptService promptService;
+
+
+    @GetMapping()
+    ResponseEntity<Page<Prompt.PublicPrompt>> getPublicPromptsByIdAndTagNames(Pageable pageable,
+                                                                              @RequestParam(required = false, defaultValue = "",name = "categoryId") List<Long> categoryIds) {
+        return ResponseEntity.ok(promptService.getPublicPromptsByCategoryIds(categoryIds, pageable));
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getPromptById(@PathVariable Long id) {
