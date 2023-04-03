@@ -47,7 +47,7 @@ Page({
         duration: 3000
       })
       setTimeout(() => {
-        wx.navigateTo({ url: 'pages/index/index' })
+        wx.navigateTo({url: 'pages/index/index'})
       }, 3000)
     } catch (e) {
       await wx.hideLoading()
