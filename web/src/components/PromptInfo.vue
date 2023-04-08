@@ -40,8 +40,7 @@ const props = defineProps<Props>()
 <style scoped lang="scss">
 
 .list-item {
-  height: 340px;
-  width: 360px;
+  height: 350px;
   border-radius: 16px;
 }
 

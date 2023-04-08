@@ -1,10 +1,10 @@
 import {post} from '../utils/request'
 
-export const auth = (): Promise<AuthResponse> =>
+export const auth = (authCode: string): Promise<AuthResponse> =>
   new Promise<AuthResponse>((resolve, reject) => {
     wx.login({
-      success: async (loginResult: WechatMiniprogram.LoginSuccessCallbackResult) => {
-        post<AuthResponse>('/wechat/auth', {code: loginResult.code})
+      success: (loginResult: WechatMiniprogram.LoginSuccessCallbackResult) => {
+        post<AuthResponse>('/wechat/auth', {code: loginResult.code, authCode})
           .then((result: AuthResponse) => {
             wx.setStorageSync('openId', result.openId)
             resolve(result)
@@ -12,6 +12,10 @@ export const auth = (): Promise<AuthResponse> =>
           .catch(() => {
             reject()
           })
+      },
+      fail: (err :WechatMiniprogram.GeneralCallbackResult) => {
+        console.error('请求登录信息失败', err)
+        reject()
       }
     })
   })

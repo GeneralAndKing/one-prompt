@@ -1,5 +1,6 @@
 import { boot } from 'quasar/wrappers'
 import axios, { AxiosInstance } from 'axios'
+import { useApplicationStore } from '@/stores/useApplicationStore'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -20,10 +21,10 @@ const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('access_token')
+    const applicationStore = useApplicationStore()
 
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`
+    if (applicationStore && applicationStore.token && applicationStore.token.accessToken) {
+      config.headers.Authorization = `Bearer ${applicationStore.token.accessToken}`
     }
 
     return config

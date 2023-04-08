@@ -3,8 +3,10 @@
     <div class="home-nav absolute full-width row justify-between items-center q-px-lg-xl">
       <img class="home-nav-logo q-ml-xl" alt="logo" src="https://resources.echocow.cn/prompt/logo-line.png"/>
       <div class="home-nav-action xs-hide q-mr-sm-xl lt-q-mr-none">
-        <q-btn class="home-nav-button" style="margin-right: 24px" flat rounded color="white" label="注册"/>
-        <q-btn class="home-nav-button" unelevated rounded color="primary" @click="showLogin = true" label="登陆"/>
+        <template v-if="!applicationStore.isLogin">
+          <q-btn class="home-nav-button" style="margin-right: 24px" flat rounded color="white" label="注册"/>
+          <q-btn class="home-nav-button" unelevated rounded color="primary" @click="showLogin = true" label="登陆"/>
+        </template>
       </div>
     </div>
     <div class="home-main flex justify-center column">
@@ -14,7 +16,7 @@
         更好的从 AI 那里获取到更多价值
       </div>
       <div class="home-main-action flex">
-        <q-btn class="home-action-button q-mr-xl" color="primary" label="查看"/>
+        <q-btn to="/dashboard" class="home-action-button q-mr-xl" color="primary" label="查看"/>
         <q-btn outline class="home-action-button" color="white" label="分享"/>
       </div>
     </div>
@@ -35,7 +37,9 @@ import HomeAi from 'pages/HomePage/HomeAi.vue'
 import LoginDialog from 'components/LoginDialog.vue'
 import { ref } from 'vue'
 import HomeCategory from 'pages/HomePage/HomeCategory.vue'
+import { useApplicationStore } from '@/stores/useApplicationStore'
 
+const applicationStore = useApplicationStore()
 const showLogin = ref(false)
 
 </script>

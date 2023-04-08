@@ -1,20 +1,27 @@
 import Toast from 'tdesign-miniprogram/toast'
 import {auth, login} from '../../api/auth'
-import {parseQueryParams} from '../../utils/util'
+import {isEmpty, parseQueryParams} from '../../utils/util'
 
 Page({
   data: {
     authCode: '',
     openId: ''
   },
-  onLoad(option: Record<string, string>) {
+  async onLoad(option: Record<string, string>) {
     const openId = wx.getStorageSync('openId')
-    if (!openId) {
-      auth().catch(() => console.error('登陆失败'))
-    }
     const scene = decodeURIComponent(option.scene)
     const param = parseQueryParams(scene)
+    console.log(openId, scene)
+    if (isEmpty(param.authCode)) {
+      await wx.showToast({
+        title: '未获取到登陆信息，请重新扫码尝试',
+        icon: 'none',
+        duration: 5000
+      })
+      return
+    }
     this.setData({authCode: param.authCode, openId})
+    await auth(param.authCode).catch(() => console.error('登陆失败'))
   },
   async getUserInfo(e: WechatMiniprogram.ButtonGetPhoneNumber) {
     console.log(this.data.authCode, this.data.authCode === undefined, this.data.authCode === '')

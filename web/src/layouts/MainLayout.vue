@@ -10,9 +10,10 @@
           </template>
         </q-input>
         <div class="flex q-gutter-md">
-          <q-btn class="home-nav-button" style="margin-right: 24px" flat rounded color="white" label="注册"/>
-          <q-btn class="home-nav-button" unelevated rounded color="primary" @click="showLogin = true" label="登陆"/>
-          <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
+          <template v-if="!applicationStore.isLogin">
+            <q-btn class="home-nav-button" style="margin-right: 24px" flat rounded color="white" label="注册"/>
+            <q-btn class="home-nav-button" unelevated rounded color="primary" @click="showLogin = true" label="登陆"/>
+          </template>
         </div>
       </q-toolbar>
     </q-header>
@@ -92,17 +93,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import LoginDialog from 'components/LoginDialog.vue'
+import { useApplicationStore } from '@/stores/useApplicationStore'
+const applicationStore = useApplicationStore()
 const showLogin = ref(false)
 
 const leftDrawerOpen = ref(false)
-const rightDrawerOpen = ref(false)
 
 const toggleLeftDrawer = () => {
   leftDrawerOpen.value = !leftDrawerOpen.value
-}
-
-const toggleRightDrawer = () => {
-  rightDrawerOpen.value = !rightDrawerOpen.value
 }
 
 </script>

@@ -27,3 +27,6 @@ export const parseQueryParams = (queryParams: string): Record<string, string> =>
   }
   return queryParamsObject
 }
+
+export const isEmpty = (str: string) : boolean =>
+  str  === undefined || str === '' || str.trim() === '<empty>' || str.trim() === ''

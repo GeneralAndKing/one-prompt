@@ -7,6 +7,6 @@ export interface UserToken {
   id?: string
   subject?: string
   username?: string
-  accessToken?: string
+  accessToken?: string | null
   refreshToken?: string
 }

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { UserToken } from '@/model/Auth'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
 export const useApplicationStore = defineStore('application', () => {
   const token = ref<UserToken | null>(null)
@@ -9,8 +9,15 @@ export const useApplicationStore = defineStore('application', () => {
     token.value = val
   }
 
+  const isLogin = computed(() => {
+    return token.value !== null && token.value.accessToken !== null
+  })
+
   return {
     token,
-    setToken
+    setToken,
+    isLogin
   }
+}, {
+  persist: true
 })
