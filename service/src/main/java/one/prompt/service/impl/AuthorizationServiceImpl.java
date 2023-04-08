@@ -30,14 +30,20 @@ public class AuthorizationServiceImpl implements AuthorizationService {
   @Override
   public UserToken miniAuth(String authCode) {
     String key = ApplicationCache.Wechat.MINI_AUTH_CODE.key() + authCode;
-    String phone = redisTemplate.opsForValue().get(key);
-    if (StringUtils.isBlank(phone)) {
+    String value = redisTemplate.opsForValue().get(key);
+    if (StringUtils.isBlank(value)) {
       return new UserToken();
     }
-    if (phone.length() < MIN_PHONE_NUMBER) {
+    if (StringUtils.equalsIgnoreCase(value, Boolean.TRUE.toString())) {
+      // 扫码成功
+      return new UserToken().setId(Boolean.TRUE.toString());
+    }
+    if (value.length() < MIN_PHONE_NUMBER) {
       return new UserToken();
     }
-    SysUser user = sysUserRepository.findByPhone(phone)
+    String phone = StringUtils.substringBefore(value, " ");
+    String wechatId = StringUtils.substringAfter(value, " ");
+    SysUser user = sysUserRepository.findByPhoneAndWechatId(phone, wechatId)
         .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "用户信息不存在"));
     UserToken userToken = tokenService.buildToken(user);
     redisTemplate.delete(key);

@@ -21,7 +21,17 @@ public enum WechatInfo {
   /**
    * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/mp-access-token/getAccessToken.html">获取接口调用凭据</a>
    */
-  GET_ACCESS_TOKEN("/cgi-bin/token");
+  GET_ACCESS_TOKEN("/cgi-bin/token"),
+
+  /**
+   * Mini program.
+   */
+  MINI("mini"),
+
+  /**
+   * Office account.
+   */
+  OFFICIAL("official");
 
   private final String value;
 

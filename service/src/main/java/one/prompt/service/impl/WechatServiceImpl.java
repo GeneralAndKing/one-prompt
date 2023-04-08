@@ -33,10 +33,13 @@ public class WechatServiceImpl implements WechatService {
     String key = ApplicationCache.Wechat.MINI_AUTH_CODE.key() + authCode;
     String auth = redisTemplate.opsForValue().get(key);
     if (StringUtils.isEmpty(auth)) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "登陆失败，未获取到登陆信息");
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "登陆失败，未获取到登录信息");
     }
     String phoneNumber = wechatMiniClient.getPhoneNumber(wechatCode);
     Optional<SysUser> userOptional = sysUserRepository.findByPhoneAndWechatId(phoneNumber, openId);
+    if (StringUtils.isEmpty(openId)) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "登录失败，未获取到微信授权信息");
+    }
     if (userOptional.isEmpty()) {
       sysUserRepository.save(
           SysUser.builder()
@@ -44,6 +47,6 @@ public class WechatServiceImpl implements WechatService {
               .wechatId(openId)
               .build());
     }
-    redisTemplate.opsForValue().set(key, phoneNumber, 1, TimeUnit.DAYS);
+    redisTemplate.opsForValue().set(key, phoneNumber + " " + openId, 1, TimeUnit.DAYS);
   }
 }
