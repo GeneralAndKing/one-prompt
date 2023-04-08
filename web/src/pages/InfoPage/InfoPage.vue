@@ -11,7 +11,7 @@
     <div class="row no-wrap q-mt-lg justify-between">
       <q-img
         class="info-img q-mr-lg"
-        :src="`https://img.paulzzh.com/touhou/random?${new Date().toISOString()}`"/>
+        :src="`https://api.r10086.com/img-api.php?type=%E5%8A%A8%E6%BC%AB%E7%BB%BC%E5%90%881&z${new Date().toISOString()}`"/>
       <div>
         <div class="info-img-content q-gutter-lg justify-between">
           <q-img
@@ -19,13 +19,13 @@
             v-for="item in [1,2,3,4,5,6]"
             :key="item"
             style="border-radius: 16px"
-            :src="`https://img.paulzzh.com/touhou/random?${new Date().toISOString() + item}`"/>
+            :src="`https://api.r10086.com/img-api.php?type=%E5%8A%A8%E6%BC%AB%E7%BB%BC%E5%90%881&z${new Date().toISOString() + item}`"/>
         </div>
         <q-card class="bg-tip q-pa-lg q-mt-lg">
           (masterpiece:1.0), (best quality:1.4), (ultra highres:1.2), (photorealistic:1.4), (8k, RAW photo:1.2), (soft focus:1.4), 1 woman, (sharp focus:1.4), (korean:1.2), (american:1.1), detailed beautiful face, black hair, (detailed white dress:1.4), beautiful white shiny humid skin, smiling ,Full Length Shot(FLS)
           <div class="q-mt-md">
             <q-avatar style="width: 32px;height: 32px;border-radius: 24px" rounded>
-              <img alt="avatar" src="https://img.paulzzh.com/touhou/random?" />
+              <img alt="avatar" src="https://api.r10086.com/img-api.php?type=%E5%8A%A8%E6%BC%AB%E7%BB%BC%E5%90%881" />
             </q-avatar>
             <span class="q-ml-sm">Roddy Meister</span>
           </div>

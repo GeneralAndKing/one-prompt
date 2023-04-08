@@ -2,7 +2,6 @@ package one.prompt.config;
 
 import static org.springframework.security.config.Elements.ANONYMOUS;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;

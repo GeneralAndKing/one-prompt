@@ -1,4 +1,3 @@
 import { api } from '@/boot/axios'
 
-export const categoryList = () =>
-  api.get('/')
+export const categoryMenu = () => api.get('/category')
