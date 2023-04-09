@@ -1,6 +1,5 @@
 <template>
-  <q-layout class="container" view="lHh lpR fFf">
-
+  <q-layout class="container" view="lHh Lpr fFf">
     <q-header bordered class="bg-black text-white">
       <q-toolbar class="row justify-between">
         <q-btn dense flat round icon="menu" @click="toggleLeftDrawer"/>
@@ -18,9 +17,8 @@
         </div>
       </q-toolbar>
     </q-header>
-
     <q-drawer :width="210" class="bg-black" show-if-above v-model="leftDrawerOpen" side="left">
-      <q-scroll-area style="height: calc(100% - 150px);">
+      <q-scroll-area class="fit" style="height: calc(100% - 150px);">
         <q-img class="q-mx-auto flex q-mt-lg" width="125px" src="https://resources.echocow.cn/prompt/logo-line.png"/>
         <q-list style="margin-top: 20px" dense dark>
           <q-expansion-item
@@ -34,7 +32,7 @@
               </q-item-section>
               <q-item-section>{{item.name}}</q-item-section>
             </template>
-            <div v-for="(category, categoryIndex) in item.categories" :key="`category-${category.id}`"
+            <div v-for="(category, categoryIndex) in item.categories!" :key="`category-${category.id}`"
                  style="margin-left: 40px; border-left: 1px solid #999999">
               <q-item style="height: 20px" dense clickable v-ripple>
                 <q-item-section>{{ category?.name }}</q-item-section>
@@ -52,7 +50,9 @@
     <!--    </q-drawer>-->
 
     <q-page-container>
-      <router-view/>
+      <q-page padding>
+        <router-view/>
+      </q-page>
     </q-page-container>
     <login-dialog v-model="showLogin"/>
   </q-layout>
@@ -103,6 +103,7 @@ const toggleLeftDrawer = () => {
 
 <style lang="scss">
 .container {
+  height: 100vh;
   .header {
     height: 66px;
   }

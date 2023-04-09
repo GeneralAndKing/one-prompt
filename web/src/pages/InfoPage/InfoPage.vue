@@ -16,7 +16,7 @@
         <div class="info-img-content q-gutter-lg justify-between">
           <q-img
             class="info-img-sub"
-            v-for="item in [1,2,3,4,5,6]"
+            v-for="item in [1,2,3,4,5]"
             :key="item"
             style="border-radius: 16px"
             :src="`https://api.r10086.com/img-api.php?type=%E5%8A%A8%E6%BC%AB%E7%BB%BC%E5%90%881&z${new Date().toISOString() + item}`"/>
@@ -54,8 +54,8 @@
 
   .info-img {
     flex-shrink: 0;
-    width: 829px;
-    height: 829px;
+    max-width: 840px;
+    height: 840px;
     border-radius: 16px;
   }
 
