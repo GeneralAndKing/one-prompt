@@ -16,7 +16,7 @@
           <div class="q-ml-sm">是的发送到发</div>
           <q-space/>
           <div class="row items-center">
-            <q-btn class="q-pr-sm" size="10px" rounded icon="favorite_border"/>
+            <q-btn dense size="10px" rounded icon="favorite_border"/>
             <div>2000</div>
           </div>
         </div>
@@ -40,8 +40,13 @@ const props = defineProps<Props>()
 <style scoped lang="scss">
 
 .list-item {
-  height: 350px;
+  height: 300px;
   border-radius: 16px;
+}
+
+.list-action {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
+  height: 100px;
 }
 
 </style>

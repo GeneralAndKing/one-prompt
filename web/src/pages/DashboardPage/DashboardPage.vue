@@ -57,15 +57,10 @@ onMounted(() => {
 #dashboard {
   padding: 60px;
 
-  .list-action {
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
-    height: 100px;
-  }
-
   .content {
     display: grid;
     justify-content: space-between;
-    grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     grid-gap: 30px;
   }
 

@@ -20,12 +20,12 @@
       outside-arrows
       mobile-arrows
       align="left"
-      class="mine-tab shadow-2"
+      class="mine-tab"
     >
       <q-tab name="prompt" label="提示词"/>
       <q-tab name="line" label="喜欢"/>
     </q-tabs>
-    <q-card class="mine-content q-mt-none q-gutter-lg row justify-start q-gutter-sm">
+    <q-card class="mine-content">
       <prompt-info v-for="item in prompt" :prompt="item" :key="item.id"/>
     </q-card>
   </div>
@@ -93,13 +93,13 @@ onMounted(() => {
 .mine-main {
   padding: 16px 140px;
 
-  .mine-tab {
-    margin-left: -25px;
-  }
-
   .mine-content {
-    margin-top: 32px;
-    background: rgba(169, 197, 255, 0.2);;
+    padding: 32px;
+    display: grid;
+    background: rgba(169, 197, 255, 0.2);
+    justify-content: space-between;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-gap: 30px;
   }
 }
 
