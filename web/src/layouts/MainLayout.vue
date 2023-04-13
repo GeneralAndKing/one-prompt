@@ -36,7 +36,7 @@
                  style="margin-left: 40px; border-left: 1px solid #999999">
               <q-item style="height: 20px" dense clickable v-ripple>
                 <q-item-section>{{ category?.name }}</q-item-section>
-                <q-checkbox :model-value="category?.value"
+                <q-checkbox :model-value="category?.value" dense size="xs"
                             @update:modelValue="handleCheck($event,menuIndex, categoryIndex)"/>
               </q-item>
             </div>
