@@ -34,7 +34,10 @@ public class SysUser extends BaseEntity<SysUser> implements UserDetails {
     @Column(name = "name", columnDefinition = "varchar(255)")
     private String name;
 
-    @Column(name = "wechatId", columnDefinition = "varchar(255)")
+    @Column(name = "avatar", columnDefinition = "varchar(255)")
+    private String avatar;
+
+    @Column(name = "wechat_id", columnDefinition = "varchar(255)")
     private String wechatId;
 
     @Column(name = "phone", columnDefinition = "varchar(255)")
