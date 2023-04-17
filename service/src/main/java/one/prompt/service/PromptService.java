@@ -3,6 +3,7 @@ package one.prompt.service;
 
 import one.prompt.entity.Comment;
 import one.prompt.entity.Prompt;
+import one.prompt.entity.projection.PromptComplete;
 import one.prompt.model.dto.CommentRequest;
 import one.prompt.model.dto.PromptRequest;
 
@@ -25,5 +26,5 @@ public interface PromptService {
 
     Prompt add(PromptRequest request);
 
-    Page<Prompt.PublicPrompt> getPublicPromptsByCategoryIds(List<Long> categoryIds, Pageable pageable);
+    Page<PromptComplete> getPublicPromptsByCategoryIds(String name, List<Long> categoryIds, Pageable pageable);
 }
