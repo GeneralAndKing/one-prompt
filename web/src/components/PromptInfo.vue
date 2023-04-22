@@ -5,13 +5,13 @@
   >
     <q-img
       class="list-item cursor-pointer"
-      :src="prompt.logo"
+      :src="props.prompt.logo"
     >
       <div class="list-action absolute-bottom">
         <div class="ellipsis-2-lines">{{ prompt.description }}</div>
         <div class="flex items-center q-mt-xs">
           <q-avatar style="width: 26px;height: 26px">
-            <img :alt="prompt.name" :src="prompt.avtar">
+            <img :alt="prompt.name" :src="prompt.avatar">
           </q-avatar>
           <div class="q-ml-sm">是的发送到发</div>
           <q-space/>
@@ -27,10 +27,10 @@
 
 <script setup lang="ts">
 
-import { PromptUser } from '@/model/Prompt'
+import { PromptComplete } from '@/model/PromptComplete'
 
 interface Props {
-  prompt: PromptUser
+  prompt: PromptComplete
 }
 
 const props = defineProps<Props>()

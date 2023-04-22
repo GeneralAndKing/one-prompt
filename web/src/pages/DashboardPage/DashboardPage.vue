@@ -8,7 +8,7 @@
     <q-separator class="q-mt-md" color="gray"/>
     <q-infinite-scroll @load="onLoad" :offset="750">
       <div class="content">
-        <prompt-info v-for="item in prompt" :key="`item-${item.id}`" class="item fit" :prompt="item"/>
+        <prompt-info v-for="item in prompt.content" :key="`item-${item.id}`" class="item fit" :prompt="item"/>
       </div>
       <template v-slot:loading>
         <div class="row justify-center q-my-md">
@@ -22,10 +22,21 @@
 <script lang="ts" setup>
 
 import { onMounted, ref } from 'vue'
-import { PromptUser } from '@/model/Prompt'
 import PromptInfo from '@/components/PromptInfo.vue'
+import { dashboardData } from '@/api/Dashboard'
+import { Page } from '@/model/Base'
+import { PromptComplete } from '@/model/PromptComplete'
 
-const prompt = ref<PromptUser[]>([])
+const prompt = ref<Page<PromptComplete>>({
+  content: [],
+  totalPages: 0,
+  totalElements: 0,
+  first: true,
+  last: true,
+  size: 12,
+  number: 0,
+  numberOfElements: 0
+})
 
 const onLoad = (index: number, done: (stop?: boolean) => void) => {
   // TODO: 加载数据
@@ -34,22 +45,12 @@ const onLoad = (index: number, done: (stop?: boolean) => void) => {
   }, 5000)
 }
 onMounted(() => {
-  const list: PromptUser[] = []
-  // TODO  API 数据
-  for (let i = 0; i < 10; i++) {
-    list.push({
-      id: i,
-      name: `test-${i}`,
-      description: 'Suits occurring reductions accessible dennis. Suits occurring reductions accessible dennis. Suits occurring reductions accessible dennis. Suits occurring reductions accessible dennis. Suits occurring reductions accessible dennis. Suits occurring reductions accessible dennis. Suits occurring reductions accessible dennis. ',
-      category: 'box',
-      user: 'Dolores Bond',
-      avtar: `https://resources.echocow.cn/prompt/0${(i % 5) + 1}.jpeg`,
-      like: i * 5,
-      logo: `https://img.paulzzh.com/touhou/random?a=${new Date().toISOString() + i}`
-    })
-  }
-  prompt.value = list
+  handleList()
 })
+
+const handleList = async () => {
+  prompt.value = await dashboardData([], '')
+}
 
 </script>
 
