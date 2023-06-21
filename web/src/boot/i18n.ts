@@ -5,13 +5,33 @@ import messages from 'src/i18n'
 
 export type MessageLanguages = keyof typeof messages;
 // Type-define 'en-US' as the master schema for the resource
-export type MessageSchema = typeof messages['en-US'];
+export type MessageSchema = typeof messages['zh-CN'];
 
 // See https://vue-i18n.intlify.dev/guide/advanced/typescript.html#global-resource-schema-type-definition
 /* eslint-disable @typescript-eslint/no-empty-interface */
 declare module 'vue-i18n' {
   // define the locale messages schema
-  export interface DefineLocaleMessage extends MessageSchema {}
+  export interface DefineLocaleMessage extends MessageSchema {
+    tooltip: {
+      changeTheme: string,
+      changeLanguage: string
+    },
+    action: {
+      signIn: string,
+      signUp: string
+    },
+    page: {
+      chat: {
+        search: string
+      },
+      home: {
+        title: string,
+        subtitle: string,
+        try: string,
+        share: string
+      }
+    }
+  }
 
   // define the datetime format schema
   export interface DefineDateTimeFormat {}
@@ -22,8 +42,8 @@ declare module 'vue-i18n' {
 /* eslint-enable @typescript-eslint/no-empty-interface */
 
 export default boot(({ app }) => {
-  const i18n = createI18n({
-    locale: 'en-US',
+  const i18n = createI18n<[MessageSchema], 'en-US' | 'zh-CN'>({
+    locale: 'zh-CN',
     legacy: false,
     messages
   })

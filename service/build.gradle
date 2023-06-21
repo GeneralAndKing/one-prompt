@@ -5,7 +5,7 @@ plugins {
     id 'org.graalvm.buildtools.native'
 }
 
-ext['testcontainersVersion'] = '1.17.6'
+ext['testcontainersVersion'] = '1.18.3'
 
 repositories {
     maven {
