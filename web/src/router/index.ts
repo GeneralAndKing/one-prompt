@@ -8,6 +8,12 @@ import {
 
 import routes from './routes'
 
+declare module 'vue-router' {
+  interface RouteMeta {
+    auth?: boolean
+  }
+}
+
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;

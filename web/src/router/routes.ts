@@ -3,10 +3,13 @@ import { RouteRecordRaw } from 'vue-router'
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('layouts/BlankLayout.vue'),
+    component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: '', component: () => import('pages/HomePage/HomePage.vue') },
-      { path: '/chat', component: () => import('pages/ChatPage/ChatPage.vue') }
+      {
+        path: '/content/:engine?',
+        component: () => import('pages/ContentPage/ContentPage.vue')
+      }
     ]
   },
   {
