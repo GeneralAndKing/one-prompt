@@ -71,7 +71,11 @@ module.exports = configure(function (/* ctx */) {
 
       // publicPath: '/',
       // analyze: true,
-      // env: {},
+      env: {
+        MOCK_ENABLE: true,
+        MOCK_TOKEN: 'AX2kiDdDgsp0hqpwzYwTnYf5M5oE35En',
+        MOCK_BASE_URL: 'https://mock.apifox.cn/m1/2526814-0-default'
+      },
       // rawDefine: {}
       // ignorePublicFolder: true,
       // minify: false,

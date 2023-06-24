@@ -1,34 +1,45 @@
 <script setup lang="ts">
-import { RouteMeta, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { onMounted, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-
-interface FilterForm {
-  channel: string,
-  search: string,
-  view: string,
-  sort: string
-}
+import { ChannelSearchParam, search, SearchResponse } from '@/api/Channel'
+import useBoolean from '@/hooks/useBoolean'
 
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
-const form = reactive<FilterForm>({
-  channel: 'chatGPT',
-  search: '',
-  view: '',
-  sort: ''
+const form = reactive<ChannelSearchParam>({
+  engine: 'chatGPT',
+  keywords: '',
+  trending: [],
+  pageNow: 1,
+  pageSize: 10,
+  filters: {}
 })
+const view = ref('one')
 
 onMounted(() => {
   const engine = route.params.engine
   console.log(engine)
+  handleSearch()
 })
+
+const data = ref<SearchResponse[]>([])
+const { state: loading, setTrue: start, setFalse: finish } = useBoolean()
+
+const handleSearch = async () => {
+  start()
+  try {
+    data.value = await search(form)
+  } finally {
+    finish()
+  }
+}
 </script>
 
 <template>
   <q-page class="content">
     <q-tabs
-      v-model="form.channel"
+      v-model="form.engine"
       class="text-grey"
       active-color="primary"
       indicator-color="primary"
@@ -46,11 +57,14 @@ onMounted(() => {
         Show Filters
       </q-btn>
       <q-input class="col-7"
-               v-model="form.search"
+               v-model="form.keywords"
                :placeholder="t('page.chat.search')"
                outlined
                standout
                borderless
+               :loading="loading"
+               :readonly="loading"
+               @keyup.enter="handleSearch"
                dense>
         <template v-slot:prepend>
           <q-icon name="search"/>
@@ -80,7 +94,7 @@ onMounted(() => {
       </q-btn-dropdown>
 
       <q-btn-toggle
-        v-model="form.sort"
+        v-model="view"
         push
         :options="[
           {value: 'one', slot: 'one'},
@@ -175,198 +189,44 @@ onMounted(() => {
           </q-item>
         </q-list>
       </div>
-      <div class="content col">
-        <div class="row flex q-ma-lg q-gutter-x-lg">
-          <q-card class="col">
-            <q-card-section>
-              <div class="full-width flex justify-center align-middle">
-                <q-chip size="sm" label="Hello" outline />
-                <q-space />
-                <q-icon size="sm" name="list" />
-              </div>
-              <div class="q-pt-xs row q-gutter-x-lg">
-                <div class="col flex justify-between">
-                  <div class="text-h6">Linea Voyage</div>
-                  <div class="ellipsis-3-lines" style="height: calc(1em * 3 * 1.5)">
-                    Hello and you are main friend.Hello and you are main friend.Hello
-                    and you are main friend.Hello and you are main friend.Hello and you
-                    are main friend.Hello and you are main friend.Hello and you are main friend.
-                  </div>
-                  <div>
-                    <q-avatar size="sm" class="q-mr-xs">
-                      <q-img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-                    </q-avatar>
-                    <span class="text-grey-7">
-                      John Compute
-                    </span>
-                  </div>
+      <div class="data-list q-mt-lg col">
+        <q-card v-for="item in data" :key="item.id" class="col-6">
+          <q-card-section>
+            <div class="full-width flex justify-center align-middle">
+              <q-chip size="sm" label="Hello" outline />
+              <q-space />
+              <q-icon size="sm" name="list" />
+            </div>
+            <div class="q-pt-xs row q-gutter-x-lg">
+              <div class="col flex justify-between">
+                <div class="text-h6">{{ item.name }}</div>
+                <div class="ellipsis-3-lines" style="height: calc(1em * 3 * 1.5)">
+                  {{ item.description }}
                 </div>
-                <div class="col-3">
-                  <q-img
-                    src="https://cdn.galxe.com/galaxy/linea/e757b7c1-53af-41b4-93c7-48361a0cf725.jpeg?optimizer=image&width=200&quality=100" />
+                <div>
+                  <q-avatar size="sm" class="q-mr-xs">
+                    <q-img v-if="item.avatar" :src="item.avatar" />
+                  </q-avatar>
+                  <span class="text-grey-7">
+                    {{ item.author }}
+                  </span>
                 </div>
               </div>
-            </q-card-section>
-          </q-card>
-          <q-card class="col">
-            <q-card-section>
-              <div class="full-width flex justify-center align-middle">
-                <q-chip size="sm" label="Hello" outline />
-                <q-space />
-                <q-icon size="sm" name="list" />
+              <div class="col-3">
+                <q-img v-if="item.image" :src="item.image" />
               </div>
-              <div class="q-pt-xs row q-gutter-x-lg">
-                <div class="col flex justify-between">
-                  <div class="text-h6">Linea Voyage</div>
-                  <div class="ellipsis-3-lines" style="height: calc(1em * 3 * 1.5)">
-                    Hello and you are main friend.Hello and you are main friend.Hello
-                  </div>
-                  <div>
-                    <q-avatar size="sm" class="q-mr-xs">
-                      <q-img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-                    </q-avatar>
-                    <span class="text-grey-7">
-                      John Compute
-                    </span>
-                  </div>
-                </div>
-                <div class="col-3">
-                  <q-img
-                    src="https://cdn.galxe.com/galaxy/linea/e757b7c1-53af-41b4-93c7-48361a0cf725.jpeg?optimizer=image&width=200&quality=100" />
-                </div>
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
-        <div class="row flex q-ma-lg q-gutter-x-lg">
-          <q-card class="col">
-            <q-card-section>
-              <div class="full-width flex justify-center align-middle">
-                <q-chip size="sm" label="Hello" outline />
-                <q-space />
-                <q-icon size="sm" name="list" />
-              </div>
-              <div class="q-pt-xs row q-gutter-x-lg">
-                <div class="col flex justify-between">
-                  <div class="text-h6">Linea Voyage</div>
-                  <div class="ellipsis-3-lines" style="height: calc(1em * 3 * 1.5)">
-                    Hello and you are main friend.Hello and you are main friend.Hello
-                    and you are main friend.Hello and you are main friend.Hello and you
-                    are main friend.Hello and you are main friend.Hello and you are main friend.
-                  </div>
-                  <div>
-                    <q-avatar size="sm" class="q-mr-xs">
-                      <q-img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-                    </q-avatar>
-                    <span class="text-grey-7">
-                      John Compute
-                    </span>
-                  </div>
-                </div>
-                <div class="col-3">
-                  <q-img
-                    src="https://cdn.galxe.com/galaxy/linea/e757b7c1-53af-41b4-93c7-48361a0cf725.jpeg?optimizer=image&width=200&quality=100" />
-                </div>
-              </div>
-            </q-card-section>
-          </q-card>
-          <q-card class="col">
-            <q-card-section>
-              <div class="full-width flex justify-center align-middle">
-                <q-chip size="sm" label="Hello" outline />
-                <q-space />
-                <q-icon size="sm" name="list" />
-              </div>
-              <div class="q-pt-xs row q-gutter-x-lg">
-                <div class="col flex justify-between">
-                  <div class="text-h6">Linea Voyage</div>
-                  <div class="ellipsis-3-lines" style="height: calc(1em * 3 * 1.5)">
-                    Hello and you are main friend.Hello and you are main friend.Hello
-                  </div>
-                  <div>
-                    <q-avatar size="sm" class="q-mr-xs">
-                      <q-img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-                    </q-avatar>
-                    <span class="text-grey-7">
-                      John Compute
-                    </span>
-                  </div>
-                </div>
-                <div class="col-3">
-                  <q-img
-                    src="https://cdn.galxe.com/galaxy/linea/e757b7c1-53af-41b4-93c7-48361a0cf725.jpeg?optimizer=image&width=200&quality=100" />
-                </div>
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
-        <div class="row flex q-ma-lg q-gutter-x-lg">
-          <q-card class="col">
-            <q-card-section>
-              <div class="full-width flex justify-center align-middle">
-                <q-chip size="sm" label="Hello" outline />
-                <q-space />
-                <q-icon size="sm" name="list" />
-              </div>
-              <div class="q-pt-xs row q-gutter-x-lg">
-                <div class="col flex justify-between">
-                  <div class="text-h6">Linea Voyage</div>
-                  <div class="ellipsis-3-lines" style="height: calc(1em * 3 * 1.5)">
-                    Hello and you are main friend.Hello and you are main friend.Hello
-                    and you are main friend.Hello and you are main friend.Hello and you
-                    are main friend.Hello and you are main friend.Hello and you are main friend.
-                  </div>
-                  <div>
-                    <q-avatar size="sm" class="q-mr-xs">
-                      <q-img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-                    </q-avatar>
-                    <span class="text-grey-7">
-                      John Compute
-                    </span>
-                  </div>
-                </div>
-                <div class="col-3">
-                  <q-img
-                    src="https://cdn.galxe.com/galaxy/linea/e757b7c1-53af-41b4-93c7-48361a0cf725.jpeg?optimizer=image&width=200&quality=100" />
-                </div>
-              </div>
-            </q-card-section>
-          </q-card>
-          <q-card class="col">
-            <q-card-section>
-              <div class="full-width flex justify-center align-middle">
-                <q-chip size="sm" label="Hello" outline />
-                <q-space />
-                <q-icon size="sm" name="list" />
-              </div>
-              <div class="q-pt-xs row q-gutter-x-lg">
-                <div class="col flex justify-between">
-                  <div class="text-h6">Linea Voyage</div>
-                  <div class="ellipsis-3-lines" style="height: calc(1em * 3 * 1.5)">
-                    Hello and you are main friend.Hello and you are main friend.Hello
-                  </div>
-                  <div>
-                    <q-avatar size="sm" class="q-mr-xs">
-                      <q-img src="https://cdn.quasar.dev/img/boy-avatar.png" />
-                    </q-avatar>
-                    <span class="text-grey-7">
-                      John Compute
-                    </span>
-                  </div>
-                </div>
-                <div class="col-3">
-                  <q-img
-                    src="https://cdn.galxe.com/galaxy/linea/e757b7c1-53af-41b4-93c7-48361a0cf725.jpeg?optimizer=image&width=200&quality=100" />
-                </div>
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
+            </div>
+          </q-card-section>
+        </q-card>
       </div>
     </div>
   </q-page>
 </template>
 
 <style scoped lang="scss">
-
+.data-list {
+  display: grid;
+  grid-template-columns: repeat(2, calc( 50% - 14px));
+  grid-gap: 24px;
+}
 </style>

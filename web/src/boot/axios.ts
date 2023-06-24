@@ -14,8 +14,13 @@ declare module '@vue/runtime-core' {
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
+
+let baseURL = '/api'
+if (process.env.DEV && process.env.MOCK_ENABLE) {
+  baseURL = process.env.MOCK_BASE_URL || '/api'
+}
 const api = axios.create({
-  baseURL: '/api',
+  baseURL,
   responseType: 'json'
 })
 
@@ -27,6 +32,9 @@ api.interceptors.request.use(
       config.headers.Authorization = `Bearer ${applicationStore.token.accessToken}`
     }
 
+    if (process.env.DEV && process.env.MOCK_ENABLE) {
+      config.headers.apifoxToken = process.env.MOCK_TOKEN
+    }
     return config
   },
   (error) => {
