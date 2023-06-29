@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
-import { computed, onMounted, reactive, ref, watch, watchEffect } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
-  ChannelFilter,
-  ChannelFilterType,
   ChannelSearchParam,
   ChannelTab,
   getAllChannel,
@@ -12,9 +10,12 @@ import {
   SearchResponse
 } from '@/api/Channel'
 import useBoolean from '@/hooks/useBoolean'
+import ContentFilter from '@/pages/ContentPage/ContentFilter.vue'
+import ContentList from '@/pages/ContentPage/ContentList.vue'
 
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
+const contentFilter = ref<InstanceType<typeof ContentFilter>>()
 const form = reactive<ChannelSearchParam>({
   engine: '',
   keywords: '',
@@ -35,25 +36,6 @@ const channelTabs = ref<ChannelTab[]>([])
 const { state: showFilters, toggle: toggleFilters } = useBoolean(false)
 const { state: loading, setTrue: start, setFalse: finish } = useBoolean()
 
-const resetFilters = () => {
-  if (form.filters === null) {
-    form.filters = {}
-  }
-  for (const channel of channelTabs.value) {
-    for (const filter of channel.filters.filter(item => item.type === ChannelFilterType.CHECKBOX)) {
-      if (!filter.options) {
-        continue
-      }
-      for (const option of filter.options) {
-        form.filters[option.name] = false
-      }
-    }
-    for (const filter of channel.filters.filter(item => item.type === ChannelFilterType.TOGGLE)) {
-      form.filters[filter.name] = false
-    }
-  }
-}
-
 onMounted(async () => {
   channelTabs.value = await getAllChannel()
   const engine = route.params.engine
@@ -67,7 +49,7 @@ onMounted(async () => {
       form.engine = engine[0]
     }
   }
-  await resetFilters()
+  contentFilter.value?.resetFilters()
   await handleSearch()
 })
 
@@ -78,28 +60,9 @@ const currentTab = computed<ChannelTab | null>(() => {
   return channelTabs.value.find(item => item.name === form.engine) || null
 })
 
-interface ChannelTabFilters {
-  select: ChannelFilter[],
-  checkbox: ChannelFilter[],
-  toggle: ChannelFilter[]
-}
-
-const currentFilters = computed<ChannelTabFilters>(() => {
-  if (!currentTab.value) {
-    return {
-      select: [],
-      checkbox: [],
-      toggle: []
-    }
-  }
-  return {
-    select: currentTab.value?.filters.filter(item => item.type === ChannelFilterType.SELECT) || [],
-    checkbox: currentTab.value?.filters.filter(item => item.type === ChannelFilterType.CHECKBOX) || [],
-    toggle: currentTab.value?.filters.filter(item => item.type === ChannelFilterType.TOGGLE) || []
-  }
-})
 const handleSearch = async (pageName = 1) => {
   form.pageNow = pageName
+  form.filters = contentFilter.value.filters
   start()
   try {
     data.value = await search(form)
@@ -112,7 +75,7 @@ watch(() => form.engine, async () => {
   form.trending = []
   form.pageNow = 1
   form.pageSize = 1
-  await resetFilters()
+  contentFilter.value?.resetFilters()
   await handleSearch()
 })
 </script>
@@ -190,119 +153,15 @@ watch(() => form.engine, async () => {
     </div>
     <div class="row flex flex-nowrap">
       <div :class="showFilters ? '': 'hidden'" class="filter col-2">
-        <q-list padding>
-          <template v-for="item in currentFilters.toggle" :key="`toggle-${item.id}`">
-            <q-item>
-              <q-item-section>
-                <q-item-label>{{ item.name }}</q-item-label>
-              </q-item-section>
-              <q-item-section side>
-                <q-toggle
-                  dense
-                  :true-value="true"
-                  :false-value="false"
-                  v-model="form.filters[item.name]"
-                />
-              </q-item-section>
-            </q-item>
-          </template>
-          <template v-for="(item, index) in currentFilters.select" :key="`select-${item.id}`">
-            <q-separator v-if="index === 0 && currentFilters.toggle.length > 0" spaced/>
-            <q-item>
-              <q-item-section>
-                <q-item-label>{{ item.name }}</q-item-label>
-              </q-item-section>
-              <q-item-section side>
-                <q-select
-                  v-model="form.filters[item.name]"
-                  :options="item.options"
-                  hide-dropdown-icon
-                  option-label="name"
-                  option-value="value"
-                  dense
-                  :style="form.filters[item.name] || { width: '40px' }"
-                >
-                  <template v-slot:selected>
-                    <div class="full-width text-center">
-                      {{ form.filters[item.name]?.name }}
-                    </div>
-                  </template>
-                </q-select>
-              </q-item-section>
-            </q-item>
-          </template>
-          <template v-for="(item, index) in currentFilters.checkbox" :key="`checkbox-${item.id}`">
-            <q-separator v-if="index === 0 && currentFilters.select.length > 0" spaced/>
-            <q-expansion-item
-              :model-value="index === 0"
-              :label="item.name"
-            >
-              <div class="q-mt-sm">
-                <q-item v-for="option in item.options" :key="option.id" tag="label" dense v-ripple>
-                  <q-item-section side top>
-                    <q-checkbox :true-value="true" :false-value="false" dense v-model="form.filters[option.name]"/>
-                  </q-item-section>
-                  <q-item-section>
-                    <q-item-label>{{ option.name }}</q-item-label>
-                  </q-item-section>
-                </q-item>
-              </div>
-            </q-expansion-item>
-            <q-separator v-if="index !== currentFilters.checkbox.length - 1" spaced/>
-          </template>
-        </q-list>
+        <content-filter ref="contentFilter" :current-tab="currentTab" />
       </div>
       <div class="q-mt-lg q-ml-lg col">
-        <div v-show="!loading" class="data-list">
-          <q-card v-for="item in data.list" :key="item.id" class="col-6">
-            <q-card-section class="flex column full-height align-baseline content-start">
-              <div class="full-width flex justify-center align-middle" style="flex: 0">
-                <q-chip size="sm" label="Hello" outline/>
-                <q-space/>
-                <q-icon size="sm" name="list"/>
-              </div>
-              <div class="q-pt-xs row q-gutter-x-lg" style="flex: 1">
-                <div class="col flex flex-row justify-between">
-                  <div class="text-h6 ellipsis-2-lines full-width"
-                       style="height: calc(1em * 2 * 1.5);line-height: 1.5em">{{ item.name }}
-                  </div>
-                  <div class="flex-1">
-                    <div class="ellipsis-3-lines" style="height: calc(1em * 3 * 1.5);flex: 1">
-                      {{ item.description }}
-                    </div>
-                  </div>
-                  <div class="q-mt-sm">
-                    <q-avatar size="sm" class="q-mr-xs">
-                      <q-img v-if="item.avatar" :src="item.avatar"/>
-                    </q-avatar>
-                    <span class="text-grey-7">{{ item.author }}</span>
-                  </div>
-                </div>
-                <div v-if="item.image" class="col-3 flex items-center justify-center">
-                  <q-img :alt="item.name" :src="item.image"/>
-                </div>
-              </div>
-            </q-card-section>
-          </q-card>
-        </div>
-        <div class="full-width flex q-mt-lg text-center justify-center items-center">
-          <q-pagination
-            v-model="form.pageNow"
-            :max="data.totalPage"
-            input
-            @update:model-value="handleSearch"
-          />
-        </div>
+        <content-list :data="data" :form="form" :loading="loading" @handle-search="handleSearch" />
       </div>
     </div>
   </q-page>
 </template>
 
 <style scoped lang="scss">
-.data-list {
-  display: grid;
-  grid-template-columns: repeat(3, calc(33.33% - 14px));
-  grid-auto-rows: auto;
-  grid-gap: 24px;
-}
+
 </style>
