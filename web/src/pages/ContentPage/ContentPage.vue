@@ -3,12 +3,12 @@ import { useRoute } from 'vue-router'
 import { computed, onMounted, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import {
-  ChannelSearchParam,
-  ChannelTab,
-  getAllChannel,
+  SearchParam,
+  ModelTab,
+  getAllModel,
   search,
   SearchResponse
-} from '@/api/Channel'
+} from '@/api/Prompt'
 import useBoolean from '@/hooks/useBoolean'
 import ContentFilter from '@/pages/ContentPage/ContentFilter.vue'
 import ContentList from '@/pages/ContentPage/ContentList.vue'
@@ -16,13 +16,13 @@ import ContentList from '@/pages/ContentPage/ContentList.vue'
 const { t } = useI18n({ useScope: 'global' })
 const route = useRoute()
 const contentFilter = ref<InstanceType<typeof ContentFilter>>()
-const form = reactive<ChannelSearchParam>({
-  engine: '',
+const form = reactive<SearchParam>({
+  modelId: null,
   keywords: '',
-  trending: [],
+  categories: [],
   pageNow: 1,
   pageSize: 10,
-  filters: {}
+  sort: []
 })
 const view = ref('one')
 const data = ref<SearchResponse>({
@@ -32,37 +32,39 @@ const data = ref<SearchResponse>({
   total: 0,
   totalPage: 0
 })
-const channelTabs = ref<ChannelTab[]>([])
+const channelTabs = ref<ModelTab[]>([])
 const { state: showFilters, toggle: toggleFilters } = useBoolean(false)
 const { state: loading, setTrue: start, setFalse: finish } = useBoolean()
 
 onMounted(async () => {
-  channelTabs.value = await getAllChannel()
-  const engine = route.params.engine
-  if (engine === '') {
-    form.engine = channelTabs.value[0].name
+  channelTabs.value = await getAllModel()
+  const modelIdString = route.params.modelId
+  if (modelIdString === '' || modelIdString.length === 0) {
+    form.modelId = channelTabs.value[0].id
   } else {
-    const find = channelTabs.value.map(item => item.name).find(item => item === engine)
-    if ((find && find.length === 0) || !find) {
-      form.engine = channelTabs.value[0].name
+    let modelId = channelTabs.value[0].id
+    if (typeof modelIdString === 'string') {
+      modelId = parseInt(modelIdString)
     } else {
-      form.engine = engine[0]
+      modelId = parseInt(modelIdString[0])
     }
+    const find = channelTabs.value.map(item => item.id).find(item => item === modelId)
+    form.modelId = find ? modelId : channelTabs.value[0].id
   }
   contentFilter.value?.resetFilters()
   await handleSearch()
 })
 
-const currentTab = computed<ChannelTab | null>(() => {
-  if (!channelTabs.value || !form.engine) {
+const currentTab = computed<ModelTab | null>(() => {
+  if (!channelTabs.value || !form.modelId) {
     return null
   }
-  return channelTabs.value.find(item => item.name === form.engine) || null
+  return channelTabs.value.find(item => item.id === form.modelId) || null
 })
 
-const handleSearch = async (pageName = 1) => {
-  form.pageNow = pageName
-  form.filters = contentFilter.value.filters
+const handleSearch = async (pageNow = 1) => {
+  form.pageNow = pageNow
+  form.categories = contentFilter.value.filters
   start()
   try {
     data.value = await search(form)
@@ -70,9 +72,9 @@ const handleSearch = async (pageName = 1) => {
     finish()
   }
 }
-watch(() => form.engine, async () => {
+watch(() => form.modelId, async () => {
   form.keywords = ''
-  form.trending = []
+  form.sort = []
   form.pageNow = 1
   form.pageSize = 1
   contentFilter.value?.resetFilters()
@@ -83,14 +85,14 @@ watch(() => form.engine, async () => {
 <template>
   <q-page class="content">
     <q-tabs
-      v-model="form.engine"
+      v-model="form.modelId"
       class="text-grey"
       active-color="primary"
       indicator-color="primary"
       narrow-indicator
       align="left"
     >
-      <q-tab v-for="tab in channelTabs" :key="tab.id" :name="tab.name" :label="tab.name"/>
+      <q-tab v-for="tab in channelTabs" :key="`tab-${tab.id}`" :name="tab.id" :label="tab.name"/>
     </q-tabs>
     <q-separator/>
     <div class="form q-mt-md row q-gutter-x-lg">
@@ -106,7 +108,7 @@ watch(() => form.engine, async () => {
                borderless
                :loading="loading"
                :readonly="loading"
-               @keyup.enter="handleSearch"
+               @keyup.enter="handleSearch(1)"
                dense>
         <template v-slot:prepend>
           <q-icon name="search"/>

@@ -1,11 +1,11 @@
 <script setup lang="ts">
 
-import { ChannelSearchParam, SearchResponse } from '@/api/Channel'
+import { SearchParam, SearchResponse } from '@/api/Prompt'
 
 interface Props {
   data: SearchResponse;
   loading: boolean;
-  form: ChannelSearchParam;
+  form: SearchParam;
 }
 
 interface Emits {
@@ -16,8 +16,9 @@ const props = defineProps<Props>()
 
 const emit = defineEmits<Emits>()
 
-const handleSearch = (value = 1) => {
-  emit('handleSearch', value)
+const handleSearch = (value: KeyboardEvent) => {
+  console.log(value)
+  emit('handleSearch', value.detail)
 }
 
 </script>
