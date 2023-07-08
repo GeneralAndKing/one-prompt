@@ -94,4 +94,4 @@ export interface ModelTab {
 }
 
 export const getAllModel = (): Promise<ModelTab[]> =>
-  api.get('/models')
+  api.get('/model')

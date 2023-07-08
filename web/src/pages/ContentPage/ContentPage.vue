@@ -110,7 +110,7 @@ watch(() => form.modelId, async () => {
                @keyup.enter="handleSearch(1)"
                dense>
         <template v-slot:after>
-          <q-btn round dense flat icon="search" />
+          <q-btn round dense flat icon="search" @click="handleSearch(form.pageNow + 1)" />
         </template>
       </q-input>
 
