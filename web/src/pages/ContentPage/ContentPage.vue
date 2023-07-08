@@ -24,7 +24,6 @@ const form = reactive<SearchParam>({
   pageSize: 10,
   sort: []
 })
-const view = ref('one')
 const data = ref<SearchResponse>({
   list: [],
   pageNow: 1,
@@ -96,7 +95,7 @@ watch(() => form.modelId, async () => {
     </q-tabs>
     <q-separator/>
     <div class="form q-mt-md row q-gutter-x-lg">
-      <q-btn outline class="col-2" @click="toggleFilters">
+      <q-btn outline class="col-2 gt-sm" @click="toggleFilters" style="min-width: 10rem">
         <q-icon name="filter_list"/>
         Show Filters
       </q-btn>
@@ -110,12 +109,12 @@ watch(() => form.modelId, async () => {
                :readonly="loading"
                @keyup.enter="handleSearch(1)"
                dense>
-        <template v-slot:prepend>
-          <q-icon name="search"/>
+        <template v-slot:after>
+          <q-btn round dense flat icon="search" />
         </template>
       </q-input>
 
-      <q-btn-dropdown outline class="col-1" label="Trending">
+      <q-btn-dropdown outline class="col-1" label="Trending" style="min-width: 8rem">
         <q-list>
           <q-item clickable v-close-popup>
             <q-item-section>
@@ -137,33 +136,50 @@ watch(() => form.modelId, async () => {
         </q-list>
       </q-btn-dropdown>
 
-      <q-btn-toggle
-        v-model="view"
-        push
-        :options="[
-          {value: 'one', slot: 'one'},
-          {value: 'two', slot: 'two'}
-        ]"
-      >
-        <template v-slot:one>
-          <q-icon name="window"/>
-        </template>
-        <template v-slot:two>
-          <q-icon name="calendar_view_week"/>
-        </template>
-      </q-btn-toggle>
+<!--      <q-btn-toggle-->
+<!--        v-model="view"-->
+<!--        push-->
+<!--        :options="[-->
+<!--          {value: 'one', slot: 'one'},-->
+<!--          {value: 'two', slot: 'two'}-->
+<!--        ]"-->
+<!--      >-->
+<!--        <template v-slot:one>-->
+<!--          <q-icon name="window"/>-->
+<!--        </template>-->
+<!--        <template v-slot:two>-->
+<!--          <q-icon name="calendar_view_week"/>-->
+<!--        </template>-->
+<!--      </q-btn-toggle>-->
     </div>
-    <div class="row flex flex-nowrap">
-      <div :class="showFilters ? '': 'hidden'" class="filter col-2">
-        <content-filter ref="contentFilter" :current-tab="currentTab" />
-      </div>
-      <div class="q-mt-lg q-ml-lg col">
+    <div class="row flex flex-nowrap" >
+      <content-filter
+        :show-filters="showFilters"
+        ref="contentFilter"
+        @toggle-filter="toggleFilters"
+        @search="handleSearch"
+        :current-tab="currentTab" />
+      <div class="q-mt-lg q-ml-lg col q-ml-xs-sm">
         <content-list :data="data" :form="form" :loading="loading" @handle-search="handleSearch" />
       </div>
     </div>
+    <q-btn fab square @click="toggleFilters" padding="0.5rem 2rem" class="filter-fab text-capitalize lt-md"
+           color="primary">
+      <q-icon class="q-pr-xs" name="filter_list"/>
+      Filters
+    </q-btn>
   </q-page>
 </template>
 
 <style scoped lang="scss">
-
+.content {
+  margin-bottom: 4rem;
+  .filter-fab {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 0.5rem;
+  }
+}
 </style>

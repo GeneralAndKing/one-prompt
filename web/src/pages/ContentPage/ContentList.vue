@@ -69,8 +69,17 @@ const handleSearch = (value: KeyboardEvent) => {
 <style scoped lang="scss">
 .data-list {
   display: grid;
-  grid-template-columns: repeat(3, calc(33.33% - 14px));
   grid-auto-rows: auto;
+  grid-template-columns: repeat(3, calc(100% / 3 - 14px));
   grid-gap: 24px;
+  body.screen--xs & {
+    grid-template-columns: repeat(1, calc(100% / 1 - 14px));
+  }
+  body.screen--sm & {
+    grid-template-columns: repeat(2, calc(100% / 2 - 14px));
+  }
+  body.screen--md & {
+    grid-template-columns: repeat(2, calc(100% / 2 - 14px));
+  }
 }
 </style>

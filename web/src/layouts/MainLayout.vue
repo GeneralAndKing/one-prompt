@@ -14,7 +14,7 @@ const { t, locale } = useI18n({
   <q-layout>
     <q-header class="header" elevated>
       <q-toolbar class="toolbar">
-        <q-btn class="q-mr-md" size="1.25rem" flat label="ONE PROMPT"/>
+        <q-btn class="q-mr-md toolbar-title" size="1.25rem" flat label="ONE PROMPT"/>
         <!--          <q-input style="width: 40%" v-model="search" :placeholder="t('page.chat.search')" outlined standout borderless-->
         <!--                   dense>-->
         <!--            <template v-slot:prepend>-->
@@ -58,6 +58,9 @@ const { t, locale } = useI18n({
   .toolbar {
     max-width: 1440px;
     margin: 0 auto;
+    .toolbar-title {
+      min-width: 10rem;
+    }
   }
 }
 
