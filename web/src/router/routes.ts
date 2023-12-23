@@ -9,6 +9,9 @@ const routes: RouteRecordRaw[] = [
       {
         path: '/content/:modelId?',
         component: () => import('pages/ContentPage/ContentPage.vue')
+      }, {
+        path: '/prompt/:promptId',
+        component: () => import('pages/PromptPage/PromptPage.vue')
       }
     ]
   },

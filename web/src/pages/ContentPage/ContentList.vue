@@ -27,14 +27,14 @@ const handleSearch = (value: KeyboardEvent) => {
   <div v-show="!props.loading" class="data-list">
     <q-card v-for="item in data.list" :key="item.id" class="col-6">
       <q-card-section class="flex column full-height align-baseline content-start">
-        <div class="full-width flex justify-center align-middle" style="flex: 0">
-          <q-chip size="sm" label="Hello" outline/>
-          <q-space/>
-          <q-icon size="sm" name="list"/>
-        </div>
-        <div class="q-pt-xs row q-gutter-x-lg" style="flex: 1">
+<!--        <div class="full-width flex justify-center align-middle" style="flex: 0">-->
+<!--          <q-chip size="sm" label="Hello" outline/>-->
+<!--          <q-space/>-->
+<!--          <q-icon size="sm" name="list"/>-->
+<!--        </div>-->
+        <div class="row q-gutter-x-lg" style="flex: 1">
           <div class="col flex flex-row justify-between">
-            <div class="text-h6 ellipsis-2-lines full-width"
+            <div class="text-h6 ellipsis-2-lines full-width cursor-pointer"
                  style="height: calc(1em * 2 * 1.5);line-height: 1.5em">{{ item.name }}
             </div>
             <div class="flex-1">
